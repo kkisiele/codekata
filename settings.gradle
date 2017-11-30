@@ -1,0 +1,3 @@
+rootProject.name = 'codekata'
+include 'kata09-back-to-the-checkout'
+
