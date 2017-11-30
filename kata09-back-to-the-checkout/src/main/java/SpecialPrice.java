@@ -1,12 +1,16 @@
 public class SpecialPrice {
-    private String item;
+    private Item item;
     private Integer quantity;
     private int price;
 
-    public SpecialPrice(String item, Integer quantity, int price) {
+    public SpecialPrice(Item item, Integer quantity, int price) {
         this.item = item;
         this.quantity = quantity;
         this.price = price;
+    }
+
+    public SpecialPrice(String sku, Integer quantity, int price) {
+        this(Item.sku(sku), quantity, price);
     }
 
     public Price calculate(LineItems lineItems, RegularPrices regularPrices) {

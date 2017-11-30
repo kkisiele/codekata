@@ -5,7 +5,11 @@ public class CheckOut {
         this.lineItems = new LineItems(prices);
     }
 
-    public void scan(String item) {
+    public void scan(String sku) {
+        scan(Item.sku(sku));
+    }
+
+    public void scan(Item item) {
         lineItems.updateQuantity(item);
     }
 

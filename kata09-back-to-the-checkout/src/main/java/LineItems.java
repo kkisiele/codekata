@@ -5,30 +5,30 @@ import java.util.Set;
 
 public class LineItems {
     private final Prices prices;
-    private final Map<String, Integer> quantities = new HashMap<>();
+    private final Map<Item, Integer> quantities = new HashMap<>();
 
     public LineItems(Prices prices) {
         this.prices = prices;
     }
 
-    public void updateQuantity(String item) {
+    public void updateQuantity(Item item) {
         updateQuantity(item, 1);
     }
 
-    private void updateQuantity(String item, int quantity) {
+    private void updateQuantity(Item item, int quantity) {
         Integer q = quantities.getOrDefault(item, 0);
         quantities.put(item, q + quantity);
     }
 
-    public Set<String> items() {
+    public Set<Item> items() {
         return Collections.unmodifiableSet(quantities.keySet());
     }
 
-    public Integer quantity(String item) {
+    public Integer quantity(Item item) {
         return quantities.get(item);
     }
 
-    public boolean hasItem(String item) {
+    public boolean hasItem(Item item) {
         return quantities.containsKey(item);
     }
 
