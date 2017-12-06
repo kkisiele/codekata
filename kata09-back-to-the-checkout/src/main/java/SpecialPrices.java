@@ -8,11 +8,14 @@ public class SpecialPrices {
         prices.add(price);
     }
 
-    public int calculateDifference(LineItems lineItems, RegularPrices regularPrices) {
-        int difference = 0;
+    public Money calculateDifference(LineItems lineItems, RegularPrices regularPrices) {
+        Money difference = Money.of(0);
         for(SpecialPrice specialPrice : prices) {
-            Price p = specialPrice.calculate(lineItems, regularPrices);
-            difference += p.difference();
+            SpecialPrice.Result r = specialPrice.calculate(lineItems, regularPrices);
+            if(r == null) {
+                continue;
+            }
+            difference = difference.add(r.regularPrice().subtract(r.calculatedPrice()));
         }
         return difference;
     }

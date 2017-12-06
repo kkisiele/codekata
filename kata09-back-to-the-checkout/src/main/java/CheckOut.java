@@ -6,14 +6,14 @@ public class CheckOut {
     }
 
     public void scan(String sku) {
-        scan(Item.sku(sku));
+        scan(ItemSku.of(sku));
     }
 
-    public void scan(Item item) {
-        lineItems.updateQuantity(item);
+    public void scan(ItemSku itemSku) {
+        lineItems.updateQuantity(itemSku);
     }
 
-    public int total() {
+    public Money total() {
         return lineItems.calculateTotal();
     }
 }

@@ -2,19 +2,19 @@ public class Prices {
     private RegularPrices regularPrices = new RegularPrices();
     private SpecialPrices specialPrices = new SpecialPrices();
 
-    public void addPrice(String sku, int price) {
-        addPrice(Item.sku(sku), price);
+    public void addPrice(String sku, double price) {
+        addPrice(ItemSku.of(sku), Money.of(price));
     }
 
-    private void addPrice(Item item, int price) {
-        regularPrices.addPrice(item, price);
+    private void addPrice(ItemSku itemSku, Money price) {
+        regularPrices.addPrice(itemSku, price);
     }
 
     public void addSpecialPrice(SpecialPrice specialPrice) {
         specialPrices.addPrice(specialPrice);
     }
 
-    public int calculateTotal(LineItems lineItems) {
-        return regularPrices.calculate(lineItems) - specialPrices.calculateDifference(lineItems, regularPrices);
+    public Money calculateTotal(LineItems lineItems) {
+        return regularPrices.calculate(lineItems).subtract(specialPrices.calculateDifference(lineItems, regularPrices));
     }
 }

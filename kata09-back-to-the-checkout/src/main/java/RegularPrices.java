@@ -2,21 +2,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegularPrices {
-    private Map<Item, Integer> prices = new HashMap<>();
+    private Map<ItemSku, Money> prices = new HashMap<>();
 
-    public void addPrice(Item item, int price) {
-        prices.put(item, price);
+    public void addPrice(ItemSku sku, Money price) {
+        prices.put(sku, price);
     }
 
-    public int calculate(LineItems lineItems) {
-        int total = 0;
-        for(Item item : lineItems.items()) {
-            total += calculate(item, lineItems.quantity(item));
+    public Money calculate(LineItems lineItems) {
+        Money total = Money.of(0);
+        for(ItemSku sku : lineItems.items()) {
+            total = total.add(calculate(sku, lineItems.quantity(sku)));
         }
         return total;
     }
 
-    public int calculate(Item item, int quantity) {
-        return prices.get(item) * quantity;
+    public Money calculate(ItemSku sku, int quantity) {
+        return prices.get(sku).multiply(quantity);
     }
 }

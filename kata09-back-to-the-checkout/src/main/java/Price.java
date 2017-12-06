@@ -1,36 +1,25 @@
 public class Price {
-    private static final Price NULL = Price.regular(0);
+    private Money amount;
+    private int quantity;
 
-    private int special;
-    private int regular;
-
-    public static Price regular(int regular) {
-        Price price = new Price();
-        price.special = regular;
-        price.regular = regular;
-        return price;
+    public Price(Money amount, int quantity) {
+        this.amount = amount;
+        this.quantity = quantity;
     }
 
-    public static Price special(int special, int regular) {
-        Price price = new Price();
-        price.special = special;
-        price.regular = regular;
-        return price;
+    public Price(double amount, int quantity) {
+        this(Money.of(amount), quantity);
     }
 
-    public static Price nullObject() {
-        return NULL;
+    public Price(Money amount) {
+        this(amount, 1);
     }
 
-    public int getRegular() {
-        return regular;
+    public int quantity() {
+        return quantity;
     }
 
-    public int getSpecial() {
-        return special;
-    }
-
-    public int difference() {
-        return regular - special;
+    public Money multiply(double multiplicand) {
+        return amount.multiply(multiplicand);
     }
 }
