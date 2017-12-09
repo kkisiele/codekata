@@ -1,38 +1,22 @@
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class LineItems {
-    private final Prices prices;
-    private final Map<ItemSku, Integer> quantities = new HashMap<>();
+    private final Map<ItemSku, Integer> itemQuantities = new HashMap<>();
 
-    public LineItems(Prices prices) {
-        this.prices = prices;
-    }
-
-    public void updateQuantity(ItemSku itemSku) {
+    public void updateQuantityByOne(ItemSku itemSku) {
         updateQuantity(itemSku, 1);
     }
 
     private void updateQuantity(ItemSku itemSku, int quantity) {
-        Integer q = quantities.getOrDefault(itemSku, 0);
-        quantities.put(itemSku, q + quantity);
+        Integer currentQuantity = itemQuantities.getOrDefault(itemSku, 0);
+        itemQuantities.put(itemSku, currentQuantity + quantity);
     }
 
-    public Set<ItemSku> items() {
-        return Collections.unmodifiableSet(quantities.keySet());
+    public Money calculateTotal(Prices prices) {
+        return prices.calculateTotal(itemQuantities());
     }
 
-    public Integer quantity(ItemSku itemSku) {
-        return quantities.get(itemSku);
-    }
-
-    public boolean hasItem(ItemSku itemSku) {
-        return quantities.containsKey(itemSku);
-    }
-
-    public Money calculateTotal() {
-        return prices.calculateTotal(this);
+    private Map<ItemSku, Integer> itemQuantities() {
+        return Collections.unmodifiableMap(itemQuantities);
     }
 }

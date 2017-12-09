@@ -1,7 +1,7 @@
 import java.math.BigDecimal;
 
-public class Money {
-    private BigDecimal amount;
+public final class Money {
+    private final BigDecimal amount;
 
     public Money(BigDecimal amount) {
         this.amount = amount;

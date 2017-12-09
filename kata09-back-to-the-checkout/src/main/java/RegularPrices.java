@@ -2,16 +2,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegularPrices {
-    private Map<ItemSku, Money> prices = new HashMap<>();
+    private final Map<ItemSku, Money> prices = new HashMap<>();
 
     public void addPrice(ItemSku sku, Money price) {
         prices.put(sku, price);
     }
 
-    public Money calculate(LineItems lineItems) {
+    public Money calculate(Map<ItemSku, Integer> itemQuantities) {
         Money total = Money.of(0);
-        for(ItemSku sku : lineItems.items()) {
-            total = total.add(calculate(sku, lineItems.quantity(sku)));
+        for(Map.Entry<ItemSku, Integer> itemQuantity : itemQuantities.entrySet()) {
+            total = total.add(calculate(itemQuantity.getKey(), itemQuantity.getValue()));
         }
         return total;
     }
