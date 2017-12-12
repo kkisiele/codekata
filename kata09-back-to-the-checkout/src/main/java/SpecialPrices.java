@@ -9,7 +9,7 @@ public class SpecialPrices {
         prices.add(price);
     }
 
-    public Money calculateDifference(Map<ItemSku, Integer> itemQuantities, RegularPrices regularPrices) {
+    public Money calculateDiscount(Map<ItemSku, Integer> itemQuantities, RegularPrices regularPrices) {
         Money difference = Money.of(0);
         for(SpecialPrice specialPrice : prices) {
             SpecialPrice.Result r = specialPrice.calculate(itemQuantities, regularPrices);

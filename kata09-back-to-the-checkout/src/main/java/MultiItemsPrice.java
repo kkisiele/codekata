@@ -1,8 +1,8 @@
 import java.util.Map;
 
 public class MultiItemsPrice implements SpecialPrice {
-    private ItemSku sku;
-    private Price price;
+    private final ItemSku sku;
+    private final Price price;
 
     public MultiItemsPrice(ItemSku sku, Price price) {
         this.sku = sku;

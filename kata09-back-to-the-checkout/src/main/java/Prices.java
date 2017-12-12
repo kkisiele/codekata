@@ -1,8 +1,8 @@
 import java.util.Map;
 
 public class Prices {
-    private RegularPrices regularPrices = new RegularPrices();
-    private SpecialPrices specialPrices = new SpecialPrices();
+    private final RegularPrices regularPrices = new RegularPrices();
+    private final SpecialPrices specialPrices = new SpecialPrices();
 
     public void addPrice(String sku, double price) {
         addPrice(ItemSku.of(sku), Money.of(price));
@@ -17,6 +17,6 @@ public class Prices {
     }
 
     public Money calculateTotal(Map<ItemSku, Integer> itemQuantities) {
-        return regularPrices.calculate(itemQuantities).subtract(specialPrices.calculateDifference(itemQuantities, regularPrices));
+        return regularPrices.calculate(itemQuantities).subtract(specialPrices.calculateDiscount(itemQuantities, regularPrices));
     }
 }
