@@ -1,25 +1,34 @@
 public class Price {
-    private Money amount;
-    private int quantity;
+    private Money amount = Money.of(0);
+    private ItemQuantities itemQuantities = new ItemQuantities();
 
-    public Price(Money amount, int quantity) {
+    public Price() {
+        this.amount = Money.of(0);
+    }
+
+    public Price(Money amount, ItemSku sku, int quantity) {
         this.amount = amount;
-        this.quantity = quantity;
+        itemQuantities.setQuantity(sku, quantity);
     }
 
-    public Price(double amount, int quantity) {
-        this(Money.of(amount), quantity);
+    public Price(Money amount, ItemQuantities itemQuantities) {
+        this.amount = amount;
+        this.itemQuantities = ItemQuantities.combine(itemQuantities);
     }
 
-    public Price(Money amount) {
-        this(amount, 1);
+    public Price merge(Price another) {
+        return new Price(amount.add(another.amount), ItemQuantities.combine(itemQuantities, another.itemQuantities));
     }
 
-    public int quantity() {
-        return quantity;
+    public ItemQuantities itemQuantities() {
+        return ItemQuantities.combine(itemQuantities);
     }
 
-    public Money multiply(double multiplicand) {
-        return amount.multiply(multiplicand);
+    public Money amount() {
+        return amount;
+    }
+
+    public Price subtract(Money money) {
+        return new Price(amount.subtract(money), itemQuantities);
     }
 }

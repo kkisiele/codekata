@@ -1,10 +1,10 @@
 public class CheckOut {
     private final Prices prices;
-    private final LineItems lineItems;
+    private final ItemQuantities itemQuantities;
 
     public CheckOut(Prices prices) {
         this.prices = prices;
-        this.lineItems = new LineItems();
+        this.itemQuantities = new ItemQuantities();
     }
 
     public void scan(String sku) {
@@ -12,10 +12,10 @@ public class CheckOut {
     }
 
     public void scan(ItemSku itemSku) {
-        lineItems.updateQuantityByOne(itemSku);
+        itemQuantities.updateQuantityByOne(itemSku);
     }
 
     public Money total() {
-        return lineItems.calculateTotal(prices);
+        return prices.calculate(itemQuantities).amount();
     }
 }

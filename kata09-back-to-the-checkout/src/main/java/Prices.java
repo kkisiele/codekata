@@ -1,8 +1,6 @@
-import java.util.Map;
-
-public class Prices {
+public class Prices implements PriceCalculation {
     private final RegularPrices regularPrices = new RegularPrices();
-    private final SpecialPrices specialPrices = new SpecialPrices();
+    private final PriceContainer specialPrices = new PriceContainer();
 
     public void addPrice(String sku, double price) {
         addPrice(ItemSku.of(sku), Money.of(price));
@@ -12,11 +10,18 @@ public class Prices {
         regularPrices.addPrice(itemSku, price);
     }
 
-    public void addSpecialPrice(SpecialPrice specialPrice) {
-        specialPrices.addPrice(specialPrice);
+    public void addSpecialPrice(PriceCalculation priceCalculation) {
+        specialPrices.addPrice(priceCalculation);
     }
 
-    public Money calculateTotal(Map<ItemSku, Integer> itemQuantities) {
-        return regularPrices.calculate(itemQuantities).subtract(specialPrices.calculateDiscount(itemQuantities, regularPrices));
+    @Override
+    public Price calculate(ItemQuantities itemQuantities) {
+        Price regularPrice = regularPrices.calculate(itemQuantities);
+
+        Price promoPrice = specialPrices.calculate(itemQuantities);
+        Price regularPriceForPromo = regularPrices.calculate(promoPrice.itemQuantities());
+        Money m = regularPriceForPromo.amount().subtract(promoPrice.amount());
+
+        return regularPrice.subtract(m);
     }
 }
