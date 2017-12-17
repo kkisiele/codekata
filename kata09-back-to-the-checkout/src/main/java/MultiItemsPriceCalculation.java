@@ -12,12 +12,16 @@ public class MultiItemsPriceCalculation implements PriceCalculation {
     @Override
     public Price calculate(ItemQuantities itemQuantities) {
         if(itemQuantities.hasItem(sku)) {
-            int quantity = itemQuantities.get(sku);
-            if(quantity >= this.quantity) {
-                int s = quantity / this.quantity;
-                return new Price(price.multiply(s), sku, s*this.quantity);
-            }
+            return calculate(itemQuantities.get(sku));
         }
-        return new Price();
+        return null;
+    }
+
+    private Price calculate(int quantity) {
+        if(quantity >= this.quantity) {
+            int s = quantity / this.quantity;
+            return new Price(price.multiply(s), sku, s*this.quantity);
+        }
+        return null;
     }
 }

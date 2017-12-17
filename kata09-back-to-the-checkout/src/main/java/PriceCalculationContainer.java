@@ -10,10 +10,28 @@ public class PriceCalculationContainer implements PriceCalculation {
 
     @Override
     public Price calculate(ItemQuantities itemQuantities) {
-        Price price = new Price();
+        Price price = Price.ZERO;
         for(PriceCalculation priceCalculation : priceCalculations) {
-            price = price.plus(priceCalculation.calculate(itemQuantities));
+            Price calculatedPrice = new NullSafePriceCalculation(priceCalculation).calculate(itemQuantities);
+            price = price.plus(calculatedPrice);
         }
         return price;
+    }
+
+    private static class NullSafePriceCalculation implements PriceCalculation {
+        private PriceCalculation priceCalculation;
+
+        public NullSafePriceCalculation(PriceCalculation priceCalculation) {
+            this.priceCalculation = priceCalculation;
+        }
+
+        @Override
+        public Price calculate(ItemQuantities itemQuantities) {
+            Price price = priceCalculation.calculate(itemQuantities);
+            if(price == null) {
+                return Price.ZERO;
+            }
+            return price;
+        }
     }
 }

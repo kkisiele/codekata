@@ -1,9 +1,11 @@
 public final class Price {
+    public static final Price ZERO = new Price(Money.of(0));
+
     private final Money amount;
     private final ItemQuantities itemQuantities;
 
-    public Price() {
-        this(Money.of(0), new ItemQuantities());
+    public Price(Money amount) {
+        this(amount, new ItemQuantities());
     }
 
     public Price(Money amount, ItemSku sku, int quantity) {
