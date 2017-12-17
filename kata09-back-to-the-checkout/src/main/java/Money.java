@@ -19,7 +19,7 @@ public final class Money {
         return new Money(amount.multiply(multiplicand));
     }
 
-    public Money add(Money augend) {
+    public Money plus(Money augend) {
         return new Money(amount.add(augend.amount));
     }
 

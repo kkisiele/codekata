@@ -5,15 +5,20 @@ import java.util.Map;
 public final class ItemQuantities {
     private final Map<ItemSku, Integer> itemQuantities = new HashMap<>();
 
-    public static ItemQuantities combine(ItemQuantities... other) {
+    public ItemQuantities() {
+    }
+
+    public ItemQuantities(ItemSku sku, int quantity) {
+        updateQuantity(sku, quantity);
+    }
+
+    public ItemQuantities copy() {
         ItemQuantities result = new ItemQuantities();
-        for(ItemQuantities another : other) {
-            result.add(another);
-        }
+        result.updateAll(this);
         return result;
     }
 
-    private void add(ItemQuantities another) {
+    private void updateAll(ItemQuantities another) {
         for(Map.Entry<ItemSku, Integer> entry : another.itemQuantities.entrySet()) {
             updateQuantity(entry.getKey(), entry.getValue());
         }
@@ -42,5 +47,11 @@ public final class ItemQuantities {
 
     public Integer get(ItemSku sku) {
         return itemQuantities.get(sku);
+    }
+
+    public ItemQuantities plus(ItemQuantities itemQuantities) {
+        ItemQuantities result = copy();
+        result.updateAll(itemQuantities);
+        return result;
     }
 }

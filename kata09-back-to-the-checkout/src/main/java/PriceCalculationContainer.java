@@ -1,10 +1,10 @@
 import java.util.LinkedList;
 import java.util.List;
 
-public class PriceContainer implements PriceCalculation {
+public class PriceCalculationContainer implements PriceCalculation {
     private final List<PriceCalculation> priceCalculations = new LinkedList<>();
 
-    public void addPrice(PriceCalculation price) {
+    public void add(PriceCalculation price) {
         priceCalculations.add(price);
     }
 
@@ -12,9 +12,8 @@ public class PriceContainer implements PriceCalculation {
     public Price calculate(ItemQuantities itemQuantities) {
         Price price = new Price();
         for(PriceCalculation priceCalculation : priceCalculations) {
-            price = price.merge(priceCalculation.calculate(itemQuantities));
+            price = price.plus(priceCalculation.calculate(itemQuantities));
         }
         return price;
     }
-
 }

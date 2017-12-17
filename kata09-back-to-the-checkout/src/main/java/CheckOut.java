@@ -1,8 +1,8 @@
 public class CheckOut {
-    private final Prices prices;
+    private final PriceCalculation prices;
     private final ItemQuantities itemQuantities;
 
-    public CheckOut(Prices prices) {
+    public CheckOut(PriceCalculation prices) {
         this.prices = prices;
         this.itemQuantities = new ItemQuantities();
     }

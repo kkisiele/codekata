@@ -31,7 +31,7 @@ public class CheckOutTest {
     }
 
     private CheckOut createCheckOut() {
-        Prices prices = new Prices();
+        TotalPriceCalculation prices = new TotalPriceCalculation();
         prices.addPrice("A", 50);
         prices.addSpecialPrice(new MultiItemsPriceCalculation(ItemSku.of("A"), 3, Money.of(130)));
         prices.addPrice("B", 30);
@@ -39,9 +39,7 @@ public class CheckOutTest {
         prices.addPrice("C", 20);
         prices.addPrice("D", 15);
 
-
-        CheckOut checkOut = new CheckOut(prices);
-        return checkOut;
+        return new CheckOut(prices);
     }
 
     @Test
