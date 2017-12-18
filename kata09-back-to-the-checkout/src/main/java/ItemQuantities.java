@@ -3,12 +3,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class ItemQuantities {
-    private final Map<ItemSku, Integer> itemQuantities = new HashMap<>();
+    private final Map<ItemSku, Quantity> itemQuantities = new HashMap<>();
 
     public ItemQuantities() {
     }
 
-    public ItemQuantities(ItemSku sku, int quantity) {
+    public ItemQuantities(ItemSku sku, Quantity quantity) {
         updateQuantity(sku, quantity);
     }
 
@@ -19,25 +19,25 @@ public final class ItemQuantities {
     }
 
     private void updateAll(ItemQuantities another) {
-        for(Map.Entry<ItemSku, Integer> entry : another.itemQuantities.entrySet()) {
+        for(Map.Entry<ItemSku, Quantity> entry : another.itemQuantities.entrySet()) {
             updateQuantity(entry.getKey(), entry.getValue());
         }
     }
 
     public void updateQuantityByOne(ItemSku itemSku) {
-        updateQuantity(itemSku, 1);
+        updateQuantity(itemSku, Quantity.ONE);
     }
 
-    public void updateQuantity(ItemSku itemSku, int quantity) {
-        Integer currentQuantity = itemQuantities.getOrDefault(itemSku, 0);
-        setQuantity(itemSku, currentQuantity + quantity);
+    public void updateQuantity(ItemSku itemSku, Quantity quantity) {
+        Quantity currentQuantity = itemQuantities.getOrDefault(itemSku, Quantity.ZERO);
+        setQuantity(itemSku, currentQuantity.add(quantity));
     }
 
-    public Map<ItemSku, Integer> values() {
+    public Map<ItemSku, Quantity> values() {
         return Collections.unmodifiableMap(itemQuantities);
     }
 
-    public void setQuantity(ItemSku sku, int quantity) {
+    public void setQuantity(ItemSku sku, Quantity quantity) {
         itemQuantities.put(sku, quantity);
     }
 
@@ -45,7 +45,7 @@ public final class ItemQuantities {
         return get(sku) != null;
     }
 
-    public Integer get(ItemSku sku) {
+    public Quantity get(ItemSku sku) {
         return itemQuantities.get(sku);
     }
 
@@ -53,5 +53,17 @@ public final class ItemQuantities {
         ItemQuantities result = copy();
         result.updateAll(itemQuantities);
         return result;
+    }
+
+    public ItemQuantities multiply(int multiplicand) {
+        ItemQuantities result = copy();
+        result.multiplyAll(multiplicand);
+        return result;
+    }
+
+    private void multiplyAll(int multiplicand) {
+        for(Map.Entry<ItemSku, Quantity> entry : itemQuantities.entrySet()) {
+            setQuantity(entry.getKey(), entry.getValue().multiply(multiplicand));
+        }
     }
 }

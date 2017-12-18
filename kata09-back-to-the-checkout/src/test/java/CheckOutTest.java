@@ -33,9 +33,9 @@ public class CheckOutTest {
     private CheckOut createCheckOut() {
         TotalPriceCalculation prices = new TotalPriceCalculation();
         prices.addPrice("A", 50);
-        prices.addSpecialPrice(new MultiItemsPriceCalculation(ItemSku.of("A"), 3, Money.of(130)));
+        prices.addSpecialPrice(new MultiItemsPriceCalculation(ItemSku.of("A"), Quantity.of(3), Money.of(130)));
         prices.addPrice("B", 30);
-        prices.addSpecialPrice(new MultiItemsPriceCalculation(ItemSku.of("B"), 2, Money.of(45)));
+        prices.addSpecialPrice(new MultiItemsPriceCalculation(ItemSku.of("B"), Quantity.of(2), Money.of(45)));
         prices.addPrice("C", 20);
         prices.addPrice("D", 15);
 

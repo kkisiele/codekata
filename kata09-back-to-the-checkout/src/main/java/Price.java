@@ -8,7 +8,7 @@ public final class Price {
         this(amount, new ItemQuantities());
     }
 
-    public Price(Money amount, ItemSku sku, int quantity) {
+    public Price(Money amount, ItemSku sku, Quantity quantity) {
         this(amount, new ItemQuantities(sku, quantity));
     }
 
@@ -31,5 +31,17 @@ public final class Price {
 
     public Price subtract(Money money) {
         return new Price(amount.subtract(money), itemQuantities);
+    }
+
+    public ItemSku sku() {
+        return itemQuantities.values().entrySet().iterator().next().getKey();
+    }
+
+    public Quantity quantity() {
+        return itemQuantities.values().entrySet().iterator().next().getValue();
+    }
+
+    public Price multiply(int multiplicand) {
+        return new Price(amount.multiply(multiplicand), itemQuantities.multiply(multiplicand));
     }
 }

@@ -11,13 +11,13 @@ public class RegularPriceCalculation implements PriceCalculation {
     @Override
     public Price calculate(ItemQuantities itemQuantities) {
         Money total = Money.of(0);
-        for(Map.Entry<ItemSku, Integer> itemQuantity : itemQuantities.values().entrySet()) {
+        for(Map.Entry<ItemSku, Quantity> itemQuantity : itemQuantities.values().entrySet()) {
             total = total.plus(calculate(itemQuantity.getKey(), itemQuantity.getValue()));
         }
         return new Price(total, itemQuantities);
     }
 
-    public Money calculate(ItemSku sku, int quantity) {
-        return prices.get(sku).multiply(quantity);
+    public Money calculate(ItemSku sku, Quantity quantity) {
+        return prices.get(sku).multiply(quantity.value());
     }
 }
