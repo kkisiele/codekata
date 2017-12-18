@@ -12,8 +12,8 @@ public class PriceCalculationContainer implements PriceCalculation {
     public Price calculate(ItemQuantities itemQuantities) {
         Price price = Price.ZERO;
         for(PriceCalculation priceCalculation : priceCalculations) {
-            Price calculatedPrice = new NullSafePriceCalculation(priceCalculation).calculate(itemQuantities);
-            price = price.plus(calculatedPrice);
+            priceCalculation = new NullSafePriceCalculation(priceCalculation);
+            price = price.plus(priceCalculation.calculate(itemQuantities));
         }
         return price;
     }
