@@ -1,3 +1,5 @@
+package old;
+
 public class MultiItemsPriceCalculation implements PriceCalculation {
     private final Price price;
 

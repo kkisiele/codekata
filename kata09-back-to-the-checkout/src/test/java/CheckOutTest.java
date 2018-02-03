@@ -1,28 +1,30 @@
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.Assert.assertEquals;
 
 public class CheckOutTest {
     @Test
     public void testTotals() throws Exception {
-        assertEquals(Money.of(0), price(""));
-        assertEquals(Money.of(50), price("A"));
-        assertEquals(Money.of(80), price("AB"));
-        assertEquals(Money.of(115), price("CDBA"));
+        assertEquals(BigDecimal.valueOf(0), price(""));
+        assertEquals(BigDecimal.valueOf(50), price("A"));
+        assertEquals(BigDecimal.valueOf(80), price("AB"));
+        assertEquals(BigDecimal.valueOf(115), price("CDBA"));
 
-        assertEquals(Money.of(100), price("AA"));
-        assertEquals(Money.of(130), price("AAA"));
-        assertEquals(Money.of(180), price("AAAA"));
-        assertEquals(Money.of(230), price("AAAAA"));
-        assertEquals(Money.of(260), price("AAAAAA"));
+        assertEquals(BigDecimal.valueOf(100), price("AA"));
+        assertEquals(BigDecimal.valueOf(130), price("AAA"));
+        assertEquals(BigDecimal.valueOf(180), price("AAAA"));
+        assertEquals(BigDecimal.valueOf(230), price("AAAAA"));
+        assertEquals(BigDecimal.valueOf(260), price("AAAAAA"));
 
-        assertEquals(Money.of(160), price("AAAB"));
-        assertEquals(Money.of(175), price("AAABB"));
-        assertEquals(Money.of(190), price("AAABBD"));
-        assertEquals(Money.of(190), price("DABABA"));
+        assertEquals(BigDecimal.valueOf(160), price("AAAB"));
+        assertEquals(BigDecimal.valueOf(175), price("AAABB"));
+        assertEquals(BigDecimal.valueOf(190), price("AAABBD"));
+        assertEquals(BigDecimal.valueOf(190), price("DABABA"));
     }
 
-    private Money price(String items) {
+    private BigDecimal price(String items) {
         CheckOut co = createCheckOut();
         for(int i = 0; i < items.length(); i++) {
             co.scan(items.substring(i, i+1));
@@ -31,25 +33,25 @@ public class CheckOutTest {
     }
 
     private CheckOut createCheckOut() {
-        TotalPriceCalculation prices = new TotalPriceCalculation();
-        prices.addPrice("A", 50);
-        prices.addSpecialPrice(new MultiItemsPriceCalculation(ItemSku.of("A"), Quantity.of(3), Money.of(130)));
-        prices.addPrice("B", 30);
-        prices.addSpecialPrice(new MultiItemsPriceCalculation(ItemSku.of("B"), Quantity.of(2), Money.of(45)));
-        prices.addPrice("C", 20);
-        prices.addPrice("D", 15);
+        PricingRules pricingRules = new PricingRules();
+        pricingRules.addPrice("A", BigDecimal.valueOf(50));
+        pricingRules.addPrice("B", BigDecimal.valueOf(30));
+        pricingRules.addPrice("C", BigDecimal.valueOf(20));
+        pricingRules.addPrice("D", BigDecimal.valueOf(15));
+        pricingRules.addSpecialPrice(new MultiPricedItems("A", 3, BigDecimal.valueOf(130)));
+        pricingRules.addSpecialPrice(new MultiPricedItems("B", 2, BigDecimal.valueOf(45)));
 
-        return new CheckOut(prices);
+        return new CheckOut(pricingRules);
     }
 
     @Test
     public void testIncremental() throws Exception {
         CheckOut co = createCheckOut();
-        assertEquals(Money.of(0), co.total());
-        co.scan("A");  assertEquals(Money.of(50), co.total());
-        co.scan("B");  assertEquals(Money.of(80), co.total());
-        co.scan("A");  assertEquals(Money.of(130), co.total());
-        co.scan("A");  assertEquals(Money.of(160), co.total());
-        co.scan("B");  assertEquals(Money.of(175), co.total());
+        assertEquals(BigDecimal.valueOf(0), co.total());
+        co.scan("A");  assertEquals(BigDecimal.valueOf(50), co.total());
+        co.scan("B");  assertEquals(BigDecimal.valueOf(80), co.total());
+        co.scan("A");  assertEquals(BigDecimal.valueOf(130), co.total());
+        co.scan("A");  assertEquals(BigDecimal.valueOf(160), co.total());
+        co.scan("B");  assertEquals(BigDecimal.valueOf(175), co.total());
     }
 }

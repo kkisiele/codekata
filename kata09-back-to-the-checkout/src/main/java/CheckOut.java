@@ -1,21 +1,18 @@
-public class CheckOut {
-    private final PriceCalculation prices;
-    private final ItemQuantities itemQuantities;
+import java.math.BigDecimal;
 
-    public CheckOut(PriceCalculation prices) {
-        this.prices = prices;
-        this.itemQuantities = new ItemQuantities();
+public class CheckOut {
+    private final PricingRules pricingRules;
+    private final ItemQuantities itemQuantities = new ItemQuantities();
+
+    public CheckOut(PricingRules pricingRules) {
+        this.pricingRules = pricingRules;
     }
 
     public void scan(String sku) {
-        scan(ItemSku.of(sku));
+        itemQuantities.add(sku);
     }
 
-    public void scan(ItemSku itemSku) {
-        itemQuantities.updateQuantityByOne(itemSku);
-    }
-
-    public Money total() {
-        return prices.calculate(itemQuantities).amount();
+    public BigDecimal total() {
+        return pricingRules.calculate(itemQuantities);
     }
 }

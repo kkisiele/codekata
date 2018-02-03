@@ -1,3 +1,5 @@
+package old;
+
 import java.math.BigDecimal;
 
 public final class Money {

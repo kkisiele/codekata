@@ -1,3 +1,5 @@
+package old;
+
 public final class Quantity {
     public static final Quantity ZERO = new Quantity(0);
     public static final Quantity ONE = new Quantity(1);

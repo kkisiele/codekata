@@ -1,3 +1,5 @@
+package old;
+
 public final class Price {
     public static final Price ZERO = new Price(Money.of(0));
 

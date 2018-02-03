@@ -1,3 +1,5 @@
+package old;
+
 public class TotalPriceCalculation implements PriceCalculation {
     private final RegularPriceCalculation regularPriceCalculation = new RegularPriceCalculation();
     private final PriceCalculationContainer specialPrices = new PriceCalculationContainer();
