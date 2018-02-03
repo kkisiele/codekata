@@ -15,7 +15,7 @@ public class MultiItemsPricingStrategy implements PricingStrategy {
         if(item != null && item.quantity().isGreaterOrEqual(quantity)) {
             int numberOfBulks = (int) item.quantity().divide(quantity);
             Money bulkPrice = price.multiply(numberOfBulks);
-            return new Calculation(bulkPrice, new Items(sku,  quantity.multiply(numberOfBulks)));
+            return new Calculation(bulkPrice, new Item(sku, quantity.multiply(numberOfBulks)));
         }
         return null;
     }

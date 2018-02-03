@@ -1,14 +1,18 @@
 public class Calculation {
     private Money totalPrice;
-    private Items items;
+    private Items items = new Items();
 
-    public Calculation(Money totalPrice, Items items) {
+    private Calculation(Money totalPrice) {
         this.totalPrice = totalPrice;
-        this.items = items.copy();
     }
 
     public Calculation() {
-        this(Money.ZERO, new Items());
+        this(Money.ZERO);
+    }
+
+    public Calculation(Money totalPrice, Item item) {
+        this(totalPrice);
+        items.add(item);
     }
 
     public Money totalPrice() {
