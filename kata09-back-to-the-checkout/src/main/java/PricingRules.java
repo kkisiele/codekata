@@ -1,51 +1,34 @@
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class PricingRules {
-    private Map<String, BigDecimal> prices = new HashMap<>();
-    private List<SpecialPrice> specialPrices = new ArrayList<>();
+    private RegularPrices regularPrices = new RegularPrices();
+    private SpecialPrices specialPrices = new SpecialPrices();
 
-    public void addPrice(String sku, BigDecimal price) {
-        prices.put(sku, price);
+    public void addPrice(ItemSku sku, BigDecimal price) {
+        regularPrices.add(sku, price);
     }
 
-    public void addSpecialPrice(SpecialPrice specialPrice) {
-        specialPrices.add(specialPrice);
+    public void addSpecialPrice(PricingStrategy pricingStrategy) {
+        specialPrices.add(pricingStrategy);
     }
 
-    public BigDecimal calculate(ItemQuantities itemQuantities) {
-        BigDecimal regularPrice = calculateRegularPrice(itemQuantities);
-        Calculation c = specialPrice(itemQuantities);
-
-        BigDecimal sp= calculateRegularPrice(c.getItemQuantities());
-        BigDecimal a =  sp.subtract(c.getTotalPrice());
-
-        return regularPrice.subtract(a);
+    public BigDecimal calculate(Items items) {
+        BigDecimal regularPrice = calculateRegularPrice(items);
+        BigDecimal discountAmount = calculateSpecialPricesDiscountAmount(items);
+        return regularPrice.subtract(discountAmount);
     }
 
-    private BigDecimal calculateRegularPrice(ItemQuantities itemQuantities) {
-        BigDecimal result = BigDecimal.ZERO;
-        for(Map.Entry<String, Integer> entry : itemQuantities.values().entrySet()) {
-            result = result.add(prices.get(entry.getKey()).multiply(BigDecimal.valueOf(entry.getValue().intValue())));
-        }
-        return result;
+    private BigDecimal calculateSpecialPricesDiscountAmount(Items items) {
+        Calculation calculation = calculateSpecialPrices(items);
+        BigDecimal regularPrice = calculateRegularPrice(calculation.getItems());
+        return regularPrice.subtract(calculation.getTotalPrice());
     }
 
-    private Calculation specialPrice(ItemQuantities itemQuantities) {
-        Calculation r = new Calculation();
-        for(SpecialPrice specialPrice : specialPrices) {
-            //TODO: itemQuantities should be ...
-            Calculation c = specialPrice.calculate(itemQuantities);
-            if(c == null) {
-                continue;
-            }
-            r.add(c);
-        }
-
-        return r;
+    private BigDecimal calculateRegularPrice(Items items) {
+        return regularPrices.calculate(items);
     }
 
+    private Calculation calculateSpecialPrices(Items items) {
+        return specialPrices.calculate(items);
+    }
 }

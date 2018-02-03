@@ -34,12 +34,12 @@ public class CheckOutTest {
 
     private CheckOut createCheckOut() {
         PricingRules pricingRules = new PricingRules();
-        pricingRules.addPrice("A", BigDecimal.valueOf(50));
-        pricingRules.addPrice("B", BigDecimal.valueOf(30));
-        pricingRules.addPrice("C", BigDecimal.valueOf(20));
-        pricingRules.addPrice("D", BigDecimal.valueOf(15));
-        pricingRules.addSpecialPrice(new MultiPricedItems("A", 3, BigDecimal.valueOf(130)));
-        pricingRules.addSpecialPrice(new MultiPricedItems("B", 2, BigDecimal.valueOf(45)));
+        pricingRules.addPrice(ItemSku.valueOf("A"), BigDecimal.valueOf(50));
+        pricingRules.addPrice(ItemSku.valueOf("B"), BigDecimal.valueOf(30));
+        pricingRules.addPrice(ItemSku.valueOf("C"), BigDecimal.valueOf(20));
+        pricingRules.addPrice(ItemSku.valueOf("D"), BigDecimal.valueOf(15));
+        pricingRules.addSpecialPrice(new MultiItemsPricingStrategy(ItemSku.valueOf("A"), 3, BigDecimal.valueOf(130)));
+        pricingRules.addSpecialPrice(new MultiItemsPricingStrategy(ItemSku.valueOf("B"), 2, BigDecimal.valueOf(45)));
 
         return new CheckOut(pricingRules);
     }
