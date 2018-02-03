@@ -36,4 +36,10 @@ class Items {
     public Set<Item> values() {
         return new HashSet<>(itemQuantities.values());
     }
+
+    public Items copy() {
+        Items items = new Items();
+        items.addAll(this);
+        return items;
+    }
 }

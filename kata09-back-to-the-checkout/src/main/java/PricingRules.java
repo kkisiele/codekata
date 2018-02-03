@@ -18,8 +18,8 @@ public class PricingRules {
 
     private Money calculateSpecialPricesDiscountAmount(Items items) {
         Calculation calculation = calculateSpecialPrices(items);
-        Money regularPrice = calculateRegularPrice(calculation.getItems());
-        return regularPrice.subtract(calculation.getTotalPrice());
+        Money regularPrice = calculateRegularPrice(calculation.items());
+        return regularPrice.subtract(calculation.totalPrice());
     }
 
     private Money calculateRegularPrice(Items items) {

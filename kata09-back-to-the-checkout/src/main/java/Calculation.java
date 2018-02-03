@@ -4,27 +4,23 @@ public class Calculation {
 
     public Calculation(Money totalPrice, Items items) {
         this.totalPrice = totalPrice;
-        this.items = items;
-    }
-
-    public Calculation(Money totalPrice, ItemSku sku, Quantity quantity) {
-        this(totalPrice, new Items(sku, quantity));
+        this.items = items.copy();
     }
 
     public Calculation() {
         this(Money.ZERO, new Items());
     }
 
-    public Money getTotalPrice() {
+    public Money totalPrice() {
         return totalPrice;
     }
 
-    public Items getItems() {
-        return items;
+    public Items items() {
+        return items.copy();
     }
 
     public void add(Calculation calculation) {
         totalPrice = totalPrice.add(calculation.totalPrice);
-        items.addAll(calculation.getItems());
+        items.addAll(calculation.items());
     }
 }
