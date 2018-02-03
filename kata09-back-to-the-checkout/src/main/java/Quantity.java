@@ -4,16 +4,32 @@ public final class Quantity implements Comparable<Quantity> {
 
     private final Integer value;
 
-    public static Quantity valueOf(int value) {
-        return new Quantity(value);
-    }
-
     public Quantity(int value) {
         this.value = value;
     }
 
-    public Quantity add(Quantity newQuantity) {
-        return new Quantity(value + newQuantity.value);
+    public static Quantity valueOf(int value) {
+        return new Quantity(value);
+    }
+
+    public Quantity add(Quantity quantity) {
+        return new Quantity(value + quantity.value);
+    }
+
+    public boolean isGreaterOrEqual(Quantity quantity) {
+        return this.compareTo(quantity) >= 0;
+    }
+
+    public double divide(Quantity quantity) {
+        return value.doubleValue() / quantity.value.doubleValue();
+    }
+
+    public Quantity multiply(int m) {
+        return new Quantity(value * m);
+    }
+
+    public int value() {
+        return value;
     }
 
     @Override
@@ -35,19 +51,4 @@ public final class Quantity implements Comparable<Quantity> {
         return value.compareTo(quantity.value);
     }
 
-    public boolean isGreaterOrEqual(Quantity quantity) {
-        return this.compareTo(quantity) >= 0;
-    }
-
-    public double divide(Quantity quantity) {
-        return value.doubleValue() / quantity.value.doubleValue();
-    }
-
-    public Quantity multiply(int v) {
-        return new Quantity(value * v);
-    }
-
-    public int value() {
-        return value;
-    }
 }

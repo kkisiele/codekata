@@ -6,10 +6,6 @@ public class CheckOut {
         this.pricingRules = pricingRules;
     }
 
-    public void scan(String sku) {
-        scan(ItemSku.valueOf(sku));
-    }
-
     public void scan(ItemSku sku) {
         items.add(sku);
     }

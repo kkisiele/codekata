@@ -25,7 +25,7 @@ public class CheckOutTest {
     private Money price(String items) {
         CheckOut co = createCheckOut();
         for(int i = 0; i < items.length(); i++) {
-            co.scan(items.substring(i, i+1));
+            co.scan(ItemSku.valueOf(items.substring(i, i+1)));
         }
         return co.total();
     }
@@ -46,10 +46,10 @@ public class CheckOutTest {
     public void testIncremental() throws Exception {
         CheckOut co = createCheckOut();
         assertEquals(Money.valueOf(0), co.total());
-        co.scan("A");  assertEquals(Money.valueOf(50), co.total());
-        co.scan("B");  assertEquals(Money.valueOf(80), co.total());
-        co.scan("A");  assertEquals(Money.valueOf(130), co.total());
-        co.scan("A");  assertEquals(Money.valueOf(160), co.total());
-        co.scan("B");  assertEquals(Money.valueOf(175), co.total());
+        co.scan(ItemSku.valueOf("A"));  assertEquals(Money.valueOf(50), co.total());
+        co.scan(ItemSku.valueOf("B"));  assertEquals(Money.valueOf(80), co.total());
+        co.scan(ItemSku.valueOf("A"));  assertEquals(Money.valueOf(130), co.total());
+        co.scan(ItemSku.valueOf("A"));  assertEquals(Money.valueOf(160), co.total());
+        co.scan(ItemSku.valueOf("B"));  assertEquals(Money.valueOf(175), co.total());
     }
 }
