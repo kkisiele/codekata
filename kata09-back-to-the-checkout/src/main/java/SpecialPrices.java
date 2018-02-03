@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpecialPrices {
+class SpecialPrices {
     private final List<PricingStrategy> prices = new ArrayList<>();
 
     public void add(PricingStrategy price) {
@@ -13,7 +13,6 @@ public class SpecialPrices {
         for(PricingStrategy price : prices) {
             calculation.add(price.calculate(items));
         }
-
         return calculation;
     }
 

@@ -1,10 +1,8 @@
-import java.math.BigDecimal;
-
 public class PricingRules {
     private RegularPrices regularPrices = new RegularPrices();
     private SpecialPrices specialPrices = new SpecialPrices();
 
-    public void addPrice(ItemSku sku, BigDecimal price) {
+    public void addPrice(ItemSku sku, Money price) {
         regularPrices.add(sku, price);
     }
 
@@ -12,19 +10,19 @@ public class PricingRules {
         specialPrices.add(pricingStrategy);
     }
 
-    public BigDecimal calculate(Items items) {
-        BigDecimal regularPrice = calculateRegularPrice(items);
-        BigDecimal discountAmount = calculateSpecialPricesDiscountAmount(items);
+    public Money calculate(Items items) {
+        Money regularPrice = calculateRegularPrice(items);
+        Money discountAmount = calculateSpecialPricesDiscountAmount(items);
         return regularPrice.subtract(discountAmount);
     }
 
-    private BigDecimal calculateSpecialPricesDiscountAmount(Items items) {
+    private Money calculateSpecialPricesDiscountAmount(Items items) {
         Calculation calculation = calculateSpecialPrices(items);
-        BigDecimal regularPrice = calculateRegularPrice(calculation.getItems());
+        Money regularPrice = calculateRegularPrice(calculation.getItems());
         return regularPrice.subtract(calculation.getTotalPrice());
     }
 
-    private BigDecimal calculateRegularPrice(Items items) {
+    private Money calculateRegularPrice(Items items) {
         return regularPrices.calculate(items);
     }
 

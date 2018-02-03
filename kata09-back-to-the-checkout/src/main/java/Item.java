@@ -1,28 +1,28 @@
 import java.util.Objects;
 
-public final class Item {
+final class Item {
     private final ItemSku sku;
-    private final Integer quantity;
+    private final Quantity quantity;
 
-    public Item(ItemSku sku, Integer quantity) {
+    public Item(ItemSku sku, Quantity quantity) {
         this.sku = sku;
         this.quantity = quantity;
     }
 
     public Item(ItemSku sku) {
-        this(sku, 0);
+        this(sku, Quantity.ZERO);
     }
 
     public ItemSku sku() {
         return sku;
     }
 
-    public Integer quantity() {
+    public Quantity quantity() {
         return quantity;
     }
 
-    public Item updateQuantityBy(int newQuantity) {
-        return new Item(sku, quantity + newQuantity);
+    public Item updateQuantityBy(Quantity newQuantity) {
+        return new Item(sku, quantity.add(newQuantity));
     }
 
     @Override

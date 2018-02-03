@@ -1,20 +1,19 @@
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegularPrices {
-    private Map<ItemSku, BigDecimal> prices = new HashMap<>();
+class RegularPrices {
+    private Map<ItemSku, Money> prices = new HashMap<>();
 
-    public void add(ItemSku sku, BigDecimal price) {
+    public void add(ItemSku sku, Money price) {
         prices.put(sku, price);
     }
 
-    public BigDecimal calculate(Items items) {
-        BigDecimal result = BigDecimal.ZERO;
+    public Money calculate(Items items) {
+        Money total = Money.ZERO;
         for(Item item : items.values()) {
-            BigDecimal price = prices.get(item.sku());
-            result = result.add(price.multiply(BigDecimal.valueOf(item.quantity())));
+            Money price = prices.get(item.sku());
+            total = total.add(price.multiply(item.quantity()));
         }
-        return result;
+        return total;
     }
 }

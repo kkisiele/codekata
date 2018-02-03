@@ -1,23 +1,21 @@
-import java.math.BigDecimal;
-
 public class Calculation {
-    private BigDecimal totalPrice;
+    private Money totalPrice;
     private Items items;
 
-    public Calculation(BigDecimal totalPrice, Items items) {
+    public Calculation(Money totalPrice, Items items) {
         this.totalPrice = totalPrice;
         this.items = items;
     }
 
-    public Calculation(BigDecimal totalPrice, ItemSku sku, int quantity) {
+    public Calculation(Money totalPrice, ItemSku sku, Quantity quantity) {
         this(totalPrice, new Items(sku, quantity));
     }
 
     public Calculation() {
-        this(BigDecimal.ZERO, new Items());
+        this(Money.ZERO, new Items());
     }
 
-    public BigDecimal getTotalPrice() {
+    public Money getTotalPrice() {
         return totalPrice;
     }
 

@@ -1,22 +1,22 @@
 import java.util.*;
 
-public class Items {
+class Items {
     private final Map<ItemSku, Item> itemQuantities = new HashMap<>();
 
-    public Items(ItemSku sku, int quantity) {
+    public Items(ItemSku sku, Quantity quantity) {
         add(sku, quantity);
     }
 
     public Items() {
     }
 
-    private void add(ItemSku sku, int quantity) {
+    private void add(ItemSku sku, Quantity quantity) {
         Item item = itemQuantities.getOrDefault(sku, new Item(sku));
         itemQuantities.put(sku, item.updateQuantityBy(quantity));
     }
 
     public void add(ItemSku sku) {
-        add(sku, 1);
+        add(sku, Quantity.ONE);
     }
 
     public void addAll(Items items) {

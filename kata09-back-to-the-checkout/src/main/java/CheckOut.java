@@ -1,5 +1,3 @@
-import java.math.BigDecimal;
-
 public class CheckOut {
     private PricingRules pricingRules;
     private Items items = new Items();
@@ -16,7 +14,7 @@ public class CheckOut {
         items.add(sku);
     }
 
-    public BigDecimal total() {
+    public Money total() {
         return pricingRules.calculate(items);
     }
 }

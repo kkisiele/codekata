@@ -1,11 +1,9 @@
-import java.math.BigDecimal;
-
 public class MultiItemsPricingStrategy implements PricingStrategy {
     private ItemSku sku;
-    private Integer quantity;
-    private BigDecimal price;
+    private Quantity quantity;
+    private Money price;
 
-    public MultiItemsPricingStrategy(ItemSku sku, Integer quantity, BigDecimal price) {
+    public MultiItemsPricingStrategy(ItemSku sku, Quantity quantity, Money price) {
         this.sku = sku;
         this.quantity = quantity;
         this.price = price;
@@ -14,10 +12,10 @@ public class MultiItemsPricingStrategy implements PricingStrategy {
     @Override
     public Calculation calculate(Items items) {
         Item item = items.get(sku);
-        if(item != null && item.quantity().compareTo(quantity) >= 0) {
-            int numberOfBulks = item.quantity() / quantity;
-            BigDecimal bulkPrice = price.multiply(BigDecimal.valueOf(numberOfBulks));
-            return new Calculation(bulkPrice, sku, numberOfBulks * quantity);
+        if(item != null && item.quantity().isGreaterOrEqual(quantity)) {
+            int numberOfBulks = (int) item.quantity().divide(quantity);
+            Money bulkPrice = price.multiply(numberOfBulks);
+            return new Calculation(bulkPrice, sku,  quantity.multiply(numberOfBulks));
         }
         return null;
     }
