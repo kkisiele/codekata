@@ -12,7 +12,7 @@ class RegularPrices {
         Money total = Money.ZERO;
         for(Item item : items.values()) {
             Money price = prices.get(item.sku());
-            total = total.add(price.multiply(item.quantity()));
+            total = total.add(price.multiply(item.quantity().value()));
         }
         return total;
     }

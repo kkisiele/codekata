@@ -13,12 +13,12 @@ public final class Money {
         return new Money(BigDecimal.valueOf(amount));
     }
 
-    public Money multiply(int m) {
-        return new Money(amount.multiply(BigDecimal.valueOf(m)));
+    public Money multiply(BigDecimal m) {
+        return new Money(amount.multiply(m));
     }
 
-    public Money multiply(Quantity quantity) {
-        return new Money(amount.multiply(BigDecimal.valueOf(quantity.value())));
+    public Money multiply(int m) {
+        return multiply(BigDecimal.valueOf(m));
     }
 
     public Money add(Money money) {

@@ -1,11 +1,18 @@
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 public final class Quantity implements Comparable<Quantity> {
     public static Quantity ZERO = new Quantity(0);
     public static Quantity ONE = new Quantity(1);
 
-    private final Integer value;
+    private final BigDecimal value;
 
-    public Quantity(int value) {
+    private Quantity(BigDecimal value) {
         this.value = value;
+    }
+
+    private Quantity(int value) {
+        this(BigDecimal.valueOf(value));
     }
 
     public static Quantity valueOf(int value) {
@@ -13,22 +20,22 @@ public final class Quantity implements Comparable<Quantity> {
     }
 
     public Quantity add(Quantity quantity) {
-        return new Quantity(value + quantity.value);
+        return new Quantity(value.add(quantity.value));
     }
 
     public boolean isGreaterOrEqual(Quantity quantity) {
         return this.compareTo(quantity) >= 0;
     }
 
-    public double divide(Quantity quantity) {
-        return value.doubleValue() / quantity.value.doubleValue();
+    public BigDecimal divide(Quantity quantity) {
+        return value.divide(quantity.value, MathContext.DECIMAL32);
     }
 
     public Quantity multiply(int m) {
-        return new Quantity(value * m);
+        return new Quantity(value.multiply(BigDecimal.valueOf(m)));
     }
 
-    public int value() {
+    public BigDecimal value() {
         return value;
     }
 
