@@ -1,4 +1,6 @@
 rootProject.name = 'codekata'
+include 'kata04-data-munging'
 include 'kata09-back-to-the-checkout'
 include 'refactoring'
+include 'minesweeper'
 
