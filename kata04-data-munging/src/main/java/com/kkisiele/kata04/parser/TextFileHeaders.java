@@ -7,8 +7,8 @@ class TextFileHeaders {
     private List<TextFileHeader> headers = new ArrayList<>();
 
     public void add(TextFileHeader header) {
+        header.setContainer(this);
         headers.add(header);
-        header.setParent(this);
     }
 
     public TextFileHeader get(String name) {
@@ -24,7 +24,7 @@ class TextFileHeaders {
         return headers.size();
     }
 
-    public TextFileHeader nextTo(TextFileHeader header) {
+    TextFileHeader nextTo(TextFileHeader header) {
         int index = headers.indexOf(header);
         if(index + 1 < headers.size()) {
             return headers.get(index + 1);

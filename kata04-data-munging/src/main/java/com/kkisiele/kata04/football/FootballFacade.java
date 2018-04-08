@@ -7,7 +7,7 @@ public class FootballFacade {
     private final Repository repository;
 
     public FootballFacade() {
-        this.repository = new FileRepository();
+        this.repository = new TextFileRepository();
     }
 
     public String findTeamWithSmallestGoalDifference() {

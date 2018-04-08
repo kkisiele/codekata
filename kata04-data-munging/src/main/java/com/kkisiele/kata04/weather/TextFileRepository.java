@@ -7,7 +7,7 @@ import com.kkisiele.kata04.parser.TextFileRow;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileRepository implements Repository {
+public class TextFileRepository implements Repository {
     private static final String DAY_OF_MONTH_HEADER = "Dy";
     private static final String MINIMUM_TEMPERATURE_HEADER = "MnT";
     private static final String MAXIMUM_TEMPERATURE_HEADER = "MxT";
@@ -15,7 +15,7 @@ public class FileRepository implements Repository {
 
     private final TextFileParser parser;
 
-    public FileRepository() {
+    public TextFileRepository() {
         parser = new TextFileParser(new ClassPathResource("weather.dat"));
     }
 
@@ -31,7 +31,7 @@ public class FileRepository implements Repository {
     }
 
     private boolean isSummaryRow(TextFileRow row) {
-        return row.stringField(DAY_OF_MONTH_HEADER).equals(SUMMARY_ROW);
+        return row.getString(DAY_OF_MONTH_HEADER).equals(SUMMARY_ROW);
     }
 
     private class MeasurementImpl implements Measurement {
@@ -43,7 +43,7 @@ public class FileRepository implements Repository {
 
         @Override
         public int dayOfMonth() {
-            return parseInteger(DAY_OF_MONTH_HEADER);
+            return row.getInteger(DAY_OF_MONTH_HEADER);
         }
 
         @Override
@@ -57,14 +57,7 @@ public class FileRepository implements Repository {
         }
 
         private Temperature parseTemperature(String headerName) {
-            return new Temperature(parseInteger(headerName), Temperature.Unit.FAHRENHEIT);
-        }
-
-        private int parseInteger(String headerName) {
-            String value = row.stringField(headerName);
-            value = value.replaceAll("\\*", "");
-
-            return Integer.parseInt(value);
+            return Temperature.fahrenheit(row.getBigDecimal(headerName));
         }
     }
 }

@@ -7,8 +7,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class TextFileParser {
     private static final Predicate<String> IGNORE_EMPTY_LINE_PREDICATE = line -> line.trim().length() == 0;
@@ -17,12 +19,13 @@ public class TextFileParser {
     private Charset charset = StandardCharsets.UTF_8;
     private BufferedReader bufferedReader;
     private TextFileHeaders headers = new TextFileHeaders();
-    private List<Predicate<String>> ignorableLinePredicates = new ArrayList<>();
+    private List<Predicate<String>> ignoreLinePredicates = new ArrayList<>();
     private List<TextFileRow> lines = null;
+    private Pattern ignorableCharactersInNumericColumns = Pattern.compile("\\*");
 
     public TextFileParser(Resource resource) {
         this.resource = resource;
-        ignorableLinePredicates.add(IGNORE_EMPTY_LINE_PREDICATE);
+        ignoreLinePredicates.add(IGNORE_EMPTY_LINE_PREDICATE);
     }
 
     public void setCharset(Charset charset) {
@@ -31,13 +34,21 @@ public class TextFileParser {
 
     public TextFileContent parse() {
         try {
-            setupReader();
+            openReader();
             parseHeader();
             lines();
             return new TextFileContent(this);
         } finally {
             closeReader();
         }
+    }
+
+    private void openReader() {
+        InputStream inputStream = resource.getInputStream();
+        if(inputStream == null) {
+            throw new RuntimeException("Input stream is null for resource [" + resource + "]");
+        }
+        bufferedReader = new BufferedReader(new InputStreamReader(inputStream, charset));
     }
 
     private void closeReader() {
@@ -50,14 +61,6 @@ public class TextFileParser {
             bufferedReader = null;
         } catch (IOException ex) {
         }
-    }
-
-    private void setupReader() {
-        InputStream inputStream = resource.getInputStream();
-        if(inputStream == null) {
-            throw new RuntimeException("Input stream is null for resource [" + resource + "]");
-        }
-        bufferedReader = new BufferedReader(new InputStreamReader(inputStream, charset));
     }
 
     private void parseHeader() {
@@ -91,32 +94,48 @@ public class TextFileParser {
         return headers.values();
     }
 
+    public List<String> headerNames() {
+        List<String> result = new LinkedList<>();
+        for(TextFileHeader header : headers()) {
+            result.add(header.name());
+        }
+        return result;
+    }
+
+    public int numberOfHeaders() {
+        return headers().size();
+    }
+
     private String readLine() {
         try {
-            String line = bufferedReader.readLine();
-            if (line == null) {
-                return null;
-            }
-
-            if (isIgnorableLine(line)) {
-                return readLine();
-            }
-            return line;
+            return tryReadLine();
         } catch (IOException ex) {
-            throw new ParserException("", ex);
+            throw new ParserException("Error reading file", ex);
         }
     }
 
-    private boolean isIgnorableLine(String line) {
-        for(Predicate<String> ignorableLine : ignorableLinePredicates) {
-            if(ignorableLine.test(line)) {
+    private String tryReadLine() throws IOException {
+        String line = bufferedReader.readLine();
+        if (line != null && shouldIgnoreLine(line)) {
+            return tryReadLine();
+        }
+        return line;
+    }
+
+    private boolean shouldIgnoreLine(String line) {
+        for(Predicate<String> ignoreLine : ignoreLinePredicates) {
+            if(ignoreLine.test(line)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void addIgnorableLinePredicate(Predicate<String> predicate) {
-        ignorableLinePredicates.add(predicate);
+    public void addIgnoreLinePredicate(Predicate<String> predicate) {
+        ignoreLinePredicates.add(predicate);
+    }
+
+    public int numberOfRows() {
+        return lines().size();
     }
 }

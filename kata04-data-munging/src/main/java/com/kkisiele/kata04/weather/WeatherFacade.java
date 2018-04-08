@@ -7,7 +7,7 @@ public class WeatherFacade {
     private final Repository repository;
 
     public WeatherFacade() {
-        repository = new FileRepository();
+        repository = new TextFileRepository();
     }
 
     public int findDayWithSmallestTemperatureSpread() {

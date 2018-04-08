@@ -4,12 +4,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FileRepositoryTest {
-    private FileRepository repository;
+public class TextFileRepositoryTest {
+    private TextFileRepository repository;
 
     @Before
     public void setUp() {
-        repository = new FileRepository();
+        repository = new TextFileRepository();
     }
 
     @Test

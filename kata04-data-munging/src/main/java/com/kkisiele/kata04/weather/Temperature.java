@@ -15,6 +15,10 @@ public final class Temperature implements Comparable<Temperature> {
         return new Temperature(value, Unit.FAHRENHEIT);
     }
 
+    public static Temperature fahrenheit(BigDecimal value) {
+        return new Temperature(value, Unit.FAHRENHEIT);
+    }
+
     public Temperature(BigDecimal value, Unit unit) {
         this.value = value;
         this.unit = unit;

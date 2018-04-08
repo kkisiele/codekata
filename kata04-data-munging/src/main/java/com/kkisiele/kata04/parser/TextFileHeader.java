@@ -3,15 +3,15 @@ package com.kkisiele.kata04.parser;
 class TextFileHeader {
     private final String name;
     private final int offset;
-    private TextFileHeaders parent;
+    private TextFileHeaders container;
 
     public TextFileHeader(String name, int offset) {
         this.name = name;
         this.offset = offset;
     }
 
-    public void setParent(TextFileHeaders parent) {
-        this.parent = parent;
+    public void setContainer(TextFileHeaders container) {
+        this.container = container;
     }
 
     public String name() {
@@ -31,6 +31,6 @@ class TextFileHeader {
     }
 
     public TextFileHeader nextHeader() {
-        return parent.nextTo(this);
+        return container.nextTo(this);
     }
 }

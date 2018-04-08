@@ -7,12 +7,12 @@ import com.kkisiele.kata04.parser.TextFileRow;
 import java.util.ArrayList;
 import java.util.List;
 
-class FileRepository implements Repository {
+class TextFileRepository implements Repository {
     private final TextFileParser parser;
 
-    public FileRepository() {
+    public TextFileRepository() {
         parser = new TextFileParser(new ClassPathResource("football.dat"));
-        parser.addIgnorableLinePredicate(line -> line.trim().startsWith("---"));
+        parser.addIgnoreLinePredicate(line -> line.trim().startsWith("---"));
     }
 
     @Override
@@ -25,7 +25,7 @@ class FileRepository implements Repository {
     }
 
     private class TeamImpl extends Team {
-        private TextFileRow row;
+        private final TextFileRow row;
 
         public TeamImpl(TextFileRow row) {
             this.row = row;
@@ -33,17 +33,17 @@ class FileRepository implements Repository {
 
         @Override
         public String name() {
-            return row.stringField("Team");
+            return row.getString("Team");
         }
 
         @Override
         public int scoredGoals() {
-            return Integer.parseInt(row.stringField("F"));
+            return row.getInteger("F");
         }
 
         @Override
         public int concededGoals() {
-            return Integer.parseInt(row.stringField("A"));
+            return row.getInteger("A");
         }
     }
 }

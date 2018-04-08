@@ -1,5 +1,7 @@
 package com.kkisiele.kata04.parser;
 
+import java.math.BigDecimal;
+
 public class TextFileRow {
     private String line;
     private TextFileHeaders headers;
@@ -12,9 +14,26 @@ public class TextFileRow {
         this.headers = headers;
     }
 
-    public String stringField(String headerName) {
+    public String getString(String headerName) {
         TextFileHeader header = headers.get(headerName);
         return stringField(header);
+    }
+
+    public Integer getInteger(String headerName) {
+        BigDecimal value = getBigDecimal(headerName);
+        if(value == null) {
+            return null;
+        }
+        return value.intValue();
+    }
+
+    public BigDecimal getBigDecimal(String headerName) {
+        String value = getString(headerName);
+        if(value == null || value.trim().length() == 0) {
+            return null;
+        }
+        value = value.replaceAll("\\*", "");
+        return new BigDecimal(value);
     }
 
     private String stringField(TextFileHeader header) {
