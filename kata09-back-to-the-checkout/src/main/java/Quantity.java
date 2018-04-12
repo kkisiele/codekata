@@ -8,6 +8,9 @@ public final class Quantity implements Comparable<Quantity> {
     private final BigDecimal value;
 
     private Quantity(BigDecimal value) {
+        if(value.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
         this.value = value;
     }
 
@@ -21,10 +24,6 @@ public final class Quantity implements Comparable<Quantity> {
 
     public Quantity add(Quantity quantity) {
         return new Quantity(value.add(quantity.value));
-    }
-
-    public boolean isGreaterOrEqual(Quantity quantity) {
-        return this.compareTo(quantity) >= 0;
     }
 
     public BigDecimal divide(Quantity quantity) {

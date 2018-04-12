@@ -17,10 +17,10 @@ public class MultiItemsPricingStrategy implements PricingStrategy {
     }
 
     private Calculation calculate(Item calculatedItem) {
-        if(calculatedItem.hasAtLeast(item.quantity())) {
-            int numberOfBulks = calculatedItem.divide(item.quantity()).intValue();
-            return new Calculation(price.multiply(numberOfBulks), item.multiply(numberOfBulks));
+        int numberOfBulks = calculatedItem.divideQuantity(item.quantity()).intValue();
+        if(numberOfBulks == 0) {
+            return null;
         }
-        return null;
+        return new Calculation(price.multiply(numberOfBulks), item.multiply(numberOfBulks));
     }
 }

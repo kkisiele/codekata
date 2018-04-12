@@ -26,16 +26,12 @@ final class Item {
         return quantity;
     }
 
-    public boolean hasAtLeast(Quantity quantity) {
-        return quantity().isGreaterOrEqual(quantity);
-    }
-
-    public BigDecimal divide(Quantity quantity) {
-        return quantity().divide(quantity);
-    }
-
     public Item updateQuantityBy(Quantity newQuantity) {
         return new Item(sku, quantity.add(newQuantity));
+    }
+
+    public BigDecimal divideQuantity(Quantity quantity) {
+        return quantity().divide(quantity);
     }
 
     public Item multiply(int value) {
