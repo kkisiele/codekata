@@ -11,22 +11,14 @@ public class PricingRules {
     }
 
     public Money calculate(Items items) {
-        Money regularPrice = calculateRegularPrice(items);
+        Money regularPrice = regularPrices.calculate(items);
         Money discountAmount = calculateSpecialPricesDiscountAmount(items);
         return regularPrice.subtract(discountAmount);
     }
 
     private Money calculateSpecialPricesDiscountAmount(Items items) {
-        Calculation calculation = calculateSpecialPrices(items);
-        Money regularPrice = calculateRegularPrice(calculation.items());
+        Calculation calculation = specialPrices.calculate(items);
+        Money regularPrice = regularPrices.calculate(calculation.items());
         return regularPrice.subtract(calculation.totalPrice());
-    }
-
-    private Money calculateRegularPrice(Items items) {
-        return regularPrices.calculate(items);
-    }
-
-    private Calculation calculateSpecialPrices(Items items) {
-        return specialPrices.calculate(items);
     }
 }
