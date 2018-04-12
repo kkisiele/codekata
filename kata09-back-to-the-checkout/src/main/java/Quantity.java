@@ -56,5 +56,4 @@ public final class Quantity implements Comparable<Quantity> {
     public int compareTo(Quantity quantity) {
         return value.compareTo(quantity.value);
     }
-
 }
