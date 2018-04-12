@@ -5,5 +5,6 @@ Goals of this exercise:
 * adhere to object-oriented design,
 * compliant with Object Calisthenics.
 
-http://codekata.com/kata/kata09-back-to-the-checkout/
-https://www.cs.helsinki.fi/u/luontola/tdd-2009/ext/ObjectCalisthenics.pdf
+Links:
+* http://codekata.com/kata/kata09-back-to-the-checkout/
+* https://www.cs.helsinki.fi/u/luontola/tdd-2009/ext/ObjectCalisthenics.pdf
