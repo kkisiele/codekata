@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.util.Objects;
 
 final class Item {
@@ -7,6 +8,10 @@ final class Item {
     public Item(ItemSku sku, Quantity quantity) {
         this.sku = sku;
         this.quantity = quantity;
+    }
+
+    public Item(String sku, int quantity) {
+        this(ItemSku.valueOf(sku), Quantity.valueOf(quantity));
     }
 
     public Item(ItemSku sku) {
@@ -21,8 +26,20 @@ final class Item {
         return quantity;
     }
 
+    public boolean hasAtLeast(Quantity quantity) {
+        return quantity().isGreaterOrEqual(quantity);
+    }
+
+    public BigDecimal divide(Quantity quantity) {
+        return quantity().divide(quantity);
+    }
+
     public Item updateQuantityBy(Quantity newQuantity) {
         return new Item(sku, quantity.add(newQuantity));
+    }
+
+    public Item multiply(int value) {
+        return new Item(sku, quantity.multiply(value));
     }
 
     @Override

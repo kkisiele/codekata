@@ -21,8 +21,13 @@ class Items {
             add(item);
         }
     }
+
     public Item get(ItemSku sku) {
         return itemQuantities.get(sku);
+    }
+
+    public boolean contain(ItemSku sku) {
+        return get(sku) != null;
     }
 
     public Set<Item> values() {

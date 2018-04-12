@@ -36,8 +36,8 @@ public class CheckOutTest {
         pricingRules.addPrice(ItemSku.valueOf("B"), Money.valueOf(30));
         pricingRules.addPrice(ItemSku.valueOf("C"), Money.valueOf(20));
         pricingRules.addPrice(ItemSku.valueOf("D"), Money.valueOf(15));
-        pricingRules.addSpecialPrice(new MultiItemsPricingStrategy(ItemSku.valueOf("A"), Quantity.valueOf(3), Money.valueOf(130)));
-        pricingRules.addSpecialPrice(new MultiItemsPricingStrategy(ItemSku.valueOf("B"), Quantity.valueOf(2), Money.valueOf(45)));
+        pricingRules.addSpecialPrice(new MultiItemsPricingStrategy(new Item("A", 3), Money.valueOf(130)));
+        pricingRules.addSpecialPrice(new MultiItemsPricingStrategy(new Item("B", 2), Money.valueOf(45)));
 
         return new CheckOut(pricingRules);
     }
