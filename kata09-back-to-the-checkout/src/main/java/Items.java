@@ -22,6 +22,20 @@ class Items {
         }
     }
 
+    public void subtract(Items items) {
+        for(Item item: items.values()) {
+            subtract(item);
+        }
+    }
+
+    private void subtract(Item item) {
+        subtract(item.sku(), item.quantity());
+    }
+
+    private void subtract(ItemSku sku, Quantity quantity) {
+        itemQuantities.computeIfPresent(sku, (itemSku, item) -> item.subtract(quantity));
+    }
+
     public Item get(ItemSku sku) {
         return itemQuantities.get(sku);
     }

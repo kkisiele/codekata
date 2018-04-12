@@ -30,6 +30,10 @@ final class Item {
         return new Item(sku, quantity.add(newQuantity));
     }
 
+    public Item subtract(Quantity q) {
+        return new Item(sku, quantity.subtract(q));
+    }
+
     public BigDecimal divideQuantity(Quantity quantity) {
         return quantity().divide(quantity);
     }

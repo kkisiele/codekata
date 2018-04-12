@@ -9,11 +9,14 @@ class SpecialPrices {
     }
 
     public Calculation calculate(Items items) {
-        Calculation calculation = new Calculation();
+        Items calculateItems = items.copy();
+        Calculation total = new Calculation();
         for(PricingStrategy price : prices) {
-            calculation.add(price.calculate(items));
+            Calculation calculation = price.calculate(calculateItems);
+            total.add(calculation);
+            calculateItems.subtract(calculation.items());
         }
-        return calculation;
+        return total;
     }
 
     private class NullSafeCalculation implements PricingStrategy {

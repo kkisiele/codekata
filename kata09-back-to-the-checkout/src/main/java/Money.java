@@ -30,6 +30,11 @@ public final class Money {
     }
 
     @Override
+    public String toString() {
+        return amount.toString();
+    }
+
+    @Override
     public boolean equals(Object another) {
         if(another instanceof Money) {
             Money money = (Money) another;

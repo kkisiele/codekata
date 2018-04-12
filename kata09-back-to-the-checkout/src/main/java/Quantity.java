@@ -26,6 +26,10 @@ public final class Quantity implements Comparable<Quantity> {
         return new Quantity(value.add(quantity.value));
     }
 
+    public Quantity subtract(Quantity quantity) {
+        return new Quantity(value.subtract(quantity.value));
+    }
+
     public BigDecimal divide(Quantity quantity) {
         return value.divide(quantity.value, MathContext.DECIMAL32);
     }
