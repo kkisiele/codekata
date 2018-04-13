@@ -66,7 +66,7 @@ public class TextFileParser {
     private void openReader() {
         InputStream inputStream = resource.getInputStream();
         if(inputStream == null) {
-            throw new RuntimeException("Input stream is null for resource [" + resource + "]");
+            throw new ParserException("Input stream is null for resource [" + resource + "]");
         }
         bufferedReader = new BufferedReader(new InputStreamReader(inputStream, charset));
     }
