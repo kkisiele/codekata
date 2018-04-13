@@ -30,6 +30,7 @@ public class TextFileParser {
     public void setCharset(Charset charset) {
         this.charset = charset;
     }
+    
     public void addIgnoreLinePredicate(Predicate<String> predicate) {
         ignoreLinePredicates.add(predicate);
     }
