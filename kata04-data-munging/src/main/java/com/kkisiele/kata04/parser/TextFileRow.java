@@ -29,7 +29,6 @@ public class TextFileRow {
         if(value == null || value.trim().length() == 0) {
             return null;
         }
-        value = value.replaceAll("\\*", "");
         return new BigDecimal(value);
     }
 

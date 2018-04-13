@@ -4,6 +4,7 @@ import com.kkisiele.kata04.parser.ClassPathResource;
 import com.kkisiele.kata04.parser.TextFileParser;
 import com.kkisiele.kata04.parser.TextFileRow;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,16 @@ public class TextFileRepository implements Repository {
         }
 
         private Temperature parseTemperature(String headerName) {
-            return Temperature.fahrenheit(row.getBigDecimal(headerName));
+            return Temperature.fahrenheit(parseBigDecimal(headerName));
+        }
+
+        private BigDecimal parseBigDecimal(String headerName) {
+            String value = row.getString(headerName);
+            if(value == null) {
+                return null;
+            }
+            value = value.replaceAll("\\*", "");
+            return new BigDecimal(value);
         }
     }
 }

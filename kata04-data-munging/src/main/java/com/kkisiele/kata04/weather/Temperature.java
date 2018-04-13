@@ -12,7 +12,7 @@ public final class Temperature implements Comparable<Temperature> {
     }
 
     public static Temperature fahrenheit(int value) {
-        return new Temperature(value, Unit.FAHRENHEIT);
+        return fahrenheit(BigDecimal.valueOf(value));
     }
 
     public static Temperature fahrenheit(BigDecimal value) {
@@ -22,10 +22,6 @@ public final class Temperature implements Comparable<Temperature> {
     public Temperature(BigDecimal value, Unit unit) {
         this.value = value;
         this.unit = unit;
-    }
-
-    public Temperature(int value, Unit unit) {
-        this(BigDecimal.valueOf(value), unit);
     }
 
     public Temperature subtract(Temperature another) {
