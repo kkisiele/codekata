@@ -26,7 +26,7 @@ public final class FieldLocation {
     }
 
     public Set<FieldLocation> aroundLocations() {
-        var result = new HashSet<FieldLocation>();
+        Set<FieldLocation> result = new HashSet<>();
         for(int currentX = x - 1; currentX <= x + 1; currentX++) {
             for(int currentY = y - 1; currentY <= y + 1; currentY++) {
                 result.add(FieldLocation.of(currentX, currentY));
