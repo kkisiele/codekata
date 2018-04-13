@@ -8,27 +8,28 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextFileRepository implements Repository {
+class TextFileRepository implements Repository {
+    private static final String WEATHER_DATA_FILE = "weather.dat";
+
     private static final String DAY_OF_MONTH_HEADER = "Dy";
     private static final String MINIMUM_TEMPERATURE_HEADER = "MnT";
     private static final String MAXIMUM_TEMPERATURE_HEADER = "MxT";
     private static final String SUMMARY_ROW = "mo";
 
-    private final TextFileParser parser;
-
-    public TextFileRepository() {
-        parser = new TextFileParser(new ClassPathResource("weather.dat"));
-    }
-
     @Override
     public List<Measurement> getAllMeasurements() {
         List<Measurement> result = new ArrayList<>();
-        for(TextFileRow row : parser.dataRows()) {
+        for(TextFileRow row : parseDataRows()) {
             if(!isSummaryRow(row)) {
                 result.add(new MeasurementImpl(row));
             }
         }
         return result;
+    }
+
+    private List<TextFileRow> parseDataRows() {
+        TextFileParser parser = new TextFileParser(new ClassPathResource(WEATHER_DATA_FILE));
+        return parser.dataRows();
     }
 
     private boolean isSummaryRow(TextFileRow row) {

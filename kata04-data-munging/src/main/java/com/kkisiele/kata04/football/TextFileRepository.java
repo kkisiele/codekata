@@ -8,20 +8,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 class TextFileRepository implements Repository {
-    private final TextFileParser parser;
+    private static final String FOOTBALL_DATA_FILE = "football.dat";
 
-    public TextFileRepository() {
-        parser = new TextFileParser(new ClassPathResource("football.dat"));
-        parser.addIgnoreLinePredicate(line -> line.trim().startsWith("---"));
-    }
+    private static final String TEAM_NAME_HEADER = "Team";
+    private static final String SCORED_GOALS_HEADER = "F";
+    private static final String CONCEDED_GOALS_HEADER = "A";
 
     @Override
     public List<Team> getAllTeams() {
         List<Team> result = new ArrayList<>();
-        for(TextFileRow row : parser.dataRows()) {
+        for(TextFileRow row : parseDataRows()) {
             result.add(new TeamImpl(row));
         }
         return result;
+    }
+
+    private List<TextFileRow> parseDataRows() {
+        TextFileParser parser = new TextFileParser(new ClassPathResource(FOOTBALL_DATA_FILE));
+        parser.addIgnoreLinePredicate(line -> line.trim().startsWith("---"));
+        return parser.dataRows();
     }
 
     private class TeamImpl extends Team {
@@ -33,17 +38,17 @@ class TextFileRepository implements Repository {
 
         @Override
         public String name() {
-            return row.getString("Team");
+            return row.getString(TEAM_NAME_HEADER);
         }
 
         @Override
         public int scoredGoals() {
-            return row.getInteger("F");
+            return row.getInteger(SCORED_GOALS_HEADER);
         }
 
         @Override
         public int concededGoals() {
-            return row.getInteger("A");
+            return row.getInteger(CONCEDED_GOALS_HEADER);
         }
     }
 }
