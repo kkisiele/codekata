@@ -22,7 +22,7 @@ public class TextFileRepository implements Repository {
     @Override
     public List<Measurement> getAllMeasurements() {
         List<Measurement> result = new ArrayList<>();
-        for(TextFileRow row : parser.parse().lines()) {
+        for(TextFileRow row : parser.dataRows()) {
             if(!isSummaryRow(row)) {
                 result.add(new MeasurementImpl(row));
             }

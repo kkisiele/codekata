@@ -18,7 +18,7 @@ class TextFileRepository implements Repository {
     @Override
     public List<Team> getAllTeams() {
         List<Team> result = new ArrayList<>();
-        for(TextFileRow row : parser.parse().lines()) {
+        for(TextFileRow row : parser.dataRows()) {
             result.add(new TeamImpl(row));
         }
         return result;

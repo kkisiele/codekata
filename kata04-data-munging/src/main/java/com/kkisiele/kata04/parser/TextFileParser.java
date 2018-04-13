@@ -7,21 +7,20 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.regex.Pattern;
 
 public class TextFileParser {
     private static final Predicate<String> IGNORE_EMPTY_LINE_PREDICATE = line -> line.trim().length() == 0;
 
-    private Resource resource;
+    private final Resource resource;
     private Charset charset = StandardCharsets.UTF_8;
+    private List<Predicate<String>> ignoreLinePredicates = new ArrayList<>();
+
     private BufferedReader bufferedReader;
     private TextFileHeaders headers = new TextFileHeaders();
-    private List<Predicate<String>> ignoreLinePredicates = new ArrayList<>();
-    private List<TextFileRow> lines = null;
-    private Pattern ignorableCharactersInNumericColumns = Pattern.compile("\\*");
+    private List<TextFileRow> dataRows = new ArrayList<>();
 
     public TextFileParser(Resource resource) {
         this.resource = resource;
@@ -31,16 +30,37 @@ public class TextFileParser {
     public void setCharset(Charset charset) {
         this.charset = charset;
     }
+    public void addIgnoreLinePredicate(Predicate<String> predicate) {
+        ignoreLinePredicates.add(predicate);
+    }
 
-    public TextFileContent parse() {
+    public TextFileParserResult parse() {
         try {
             openReader();
             parseHeader();
-            lines();
-            return new TextFileContent(this);
+            parseDataRows();
+            return createParserResult();
         } finally {
             closeReader();
         }
+    }
+
+    public List<TextFileRow> dataRows() {
+        return parse().dataRows();
+    }
+
+    private TextFileParserResult createParserResult() {
+        return new TextFileParserResult() {
+            @Override
+            public List<TextFileHeader> headers() {
+                return headers.values();
+            }
+
+            @Override
+            public List<TextFileRow> dataRows() {
+                return Collections.unmodifiableList(dataRows);
+            }
+        };
     }
 
     private void openReader() {
@@ -52,14 +72,16 @@ public class TextFileParser {
     }
 
     private void closeReader() {
-        if(bufferedReader == null) {
-            return;
-        }
-
         try {
+            tryCloseReader();
+        } catch (IOException ex) {
+        }
+    }
+
+    private void tryCloseReader() throws IOException {
+        if(bufferedReader != null) {
             bufferedReader.close();
             bufferedReader = null;
-        } catch (IOException ex) {
         }
     }
 
@@ -72,38 +94,14 @@ public class TextFileParser {
         }
     }
 
-    List<TextFileRow> lines() {
-        if(lines == null) {
-            lines = new ArrayList<>();
-            while (true) {
-                String line = readLine();
-                if (line == null) {
-                    break;
-                }
-                TextFileRow row = new TextFileRow(line);
-                row.setHeaders(headers);
-
-                lines.add(row);
+    private void parseDataRows() {
+        while (true) {
+            String line = readLine();
+            if (line == null) {
+                break;
             }
+            dataRows.add(new TextFileRow(line, headers));
         }
-
-        return  lines;
-    }
-
-    List<TextFileHeader> headers() {
-        return headers.values();
-    }
-
-    public List<String> headerNames() {
-        List<String> result = new LinkedList<>();
-        for(TextFileHeader header : headers()) {
-            result.add(header.name());
-        }
-        return result;
-    }
-
-    public int numberOfHeaders() {
-        return headers().size();
     }
 
     private String readLine() {
@@ -129,13 +127,5 @@ public class TextFileParser {
             }
         }
         return false;
-    }
-
-    public void addIgnoreLinePredicate(Predicate<String> predicate) {
-        ignoreLinePredicates.add(predicate);
-    }
-
-    public int numberOfRows() {
-        return lines().size();
     }
 }

@@ -1,6 +1,6 @@
 package com.kkisiele.kata04.parser;
 
-class TextFileHeader {
+public class TextFileHeader {
     private final String name;
     private final int offset;
     private TextFileHeaders container;

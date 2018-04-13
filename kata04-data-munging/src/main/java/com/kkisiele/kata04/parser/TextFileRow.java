@@ -3,14 +3,11 @@ package com.kkisiele.kata04.parser;
 import java.math.BigDecimal;
 
 public class TextFileRow {
-    private String line;
+    private final String line;
     private TextFileHeaders headers;
 
-    public TextFileRow(String line) {
+    public TextFileRow(String line, TextFileHeaders headers) {
         this.line = line;
-    }
-
-    public void setHeaders(TextFileHeaders headers) {
         this.headers = headers;
     }
 
