@@ -10,7 +10,7 @@ public class TextFileHeader {
         this.offset = offset;
     }
 
-    public void setContainer(TextFileHeaders container) {
+    void setContainer(TextFileHeaders container) {
         this.container = container;
     }
 
