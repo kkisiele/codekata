@@ -30,60 +30,28 @@ public class TextFileParser {
     public void setCharset(Charset charset) {
         this.charset = charset;
     }
-    
+
     public void addIgnoreLinePredicate(Predicate<String> predicate) {
         ignoreLinePredicates.add(predicate);
-    }
-
-    public TextFileParserResult parse() {
-        try {
-            openReader();
-            parseHeader();
-            parseDataRows();
-            return createParserResult();
-        } finally {
-            closeReader();
-        }
     }
 
     public List<TextFileRow> dataRows() {
         return parse().dataRows();
     }
 
-    private TextFileParserResult createParserResult() {
-        return new TextFileParserResult() {
-            @Override
-            public List<TextFileHeader> headers() {
-                return headers.values();
-            }
-
-            @Override
-            public List<TextFileRow> dataRows() {
-                return Collections.unmodifiableList(dataRows);
-            }
-        };
-    }
-
-    private void openReader() {
-        InputStream inputStream = resource.getInputStream();
-        if(inputStream == null) {
-            throw new ParserException("Input stream is null for resource [" + resource + "]");
-        }
-        bufferedReader = new BufferedReader(new InputStreamReader(inputStream, charset));
-    }
-
-    private void closeReader() {
+    public TextFileParserResult parse() {
         try {
-            tryCloseReader();
-        } catch (IOException ex) {
+            openReader();
+            return doParse();
+        } finally {
+            closeReader();
         }
     }
 
-    private void tryCloseReader() throws IOException {
-        if(bufferedReader != null) {
-            bufferedReader.close();
-            bufferedReader = null;
-        }
+    private TextFileParserResult doParse() {
+        parseHeader();
+        parseDataRows();
+        return createParserResult();
     }
 
     private void parseHeader() {
@@ -103,6 +71,20 @@ public class TextFileParser {
             }
             dataRows.add(new TextFileRow(line, headers));
         }
+    }
+
+    private TextFileParserResult createParserResult() {
+        return new TextFileParserResult() {
+            @Override
+            public List<TextFileHeader> headers() {
+                return headers.values();
+            }
+
+            @Override
+            public List<TextFileRow> dataRows() {
+                return Collections.unmodifiableList(dataRows);
+            }
+        };
     }
 
     private String readLine() {
@@ -128,5 +110,27 @@ public class TextFileParser {
             }
         }
         return false;
+    }
+
+    private void openReader() {
+        InputStream inputStream = resource.getInputStream();
+        if(inputStream == null) {
+            throw new ParserException("Input stream is null for resource [" + resource + "]");
+        }
+        bufferedReader = new BufferedReader(new InputStreamReader(inputStream, charset));
+    }
+
+    private void closeReader() {
+        try {
+            tryCloseReader();
+        } catch (IOException ex) {
+        }
+    }
+
+    private void tryCloseReader() throws IOException {
+        if(bufferedReader != null) {
+            bufferedReader.close();
+            bufferedReader = null;
+        }
     }
 }
