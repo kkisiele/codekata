@@ -1,4 +1,4 @@
-package com.kkisiele.minesweeper.domain;
+package com.kkisiele.minesweeper;
 
 public class BoardConfiguration {
     private BoardSize size;

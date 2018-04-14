@@ -1,4 +1,4 @@
-package com.kkisiele.minesweeper.domain;
+package com.kkisiele.minesweeper;
 
 class Field {
     private boolean mine;

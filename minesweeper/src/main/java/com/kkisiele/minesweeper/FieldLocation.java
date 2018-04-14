@@ -1,4 +1,4 @@
-package com.kkisiele.minesweeper.domain;
+package com.kkisiele.minesweeper;
 
 import java.util.HashSet;
 import java.util.Objects;

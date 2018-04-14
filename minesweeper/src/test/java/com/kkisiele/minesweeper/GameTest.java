@@ -1,4 +1,4 @@
-package com.kkisiele.minesweeper.domain;
+package com.kkisiele.minesweeper;
 
 import org.junit.Assert;
 import org.junit.Before;

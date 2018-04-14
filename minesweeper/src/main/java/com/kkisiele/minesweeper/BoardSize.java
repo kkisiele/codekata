@@ -1,4 +1,4 @@
-package com.kkisiele.minesweeper.domain;
+package com.kkisiele.minesweeper;
 
 public final class BoardSize {
     private final int rows;
