@@ -72,8 +72,8 @@ public class TextFileParser {
     private ParserResult createResult() {
         return new ParserResult() {
             @Override
-            public List<HeaderName> headers() {
-                return header.values();
+            public TextFileHeader header() {
+                return header;
             }
 
             @Override

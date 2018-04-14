@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class TextFileHeader {
+public class TextFileHeader {
     private List<HeaderName> names = new ArrayList<>();
 
     public TextFileHeader(String line) {
