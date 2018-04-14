@@ -1,4 +1,4 @@
-package com.kkisiele.kata04.football;
+package com.kkisiele.munging.football;
 
 import org.junit.Assert;
 import org.junit.Before;

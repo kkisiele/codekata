@@ -1,8 +1,8 @@
-package com.kkisiele.kata04.weather;
+package com.kkisiele.munging.weather;
 
-import com.kkisiele.kata04.parser.ClassPathResource;
-import com.kkisiele.kata04.parser.TextFileParser;
-import com.kkisiele.kata04.parser.TextFileRow;
+import com.kkisiele.munging.parser.ClassPathResource;
+import com.kkisiele.munging.parser.TextFileParser;
+import com.kkisiele.munging.parser.TextFileRow;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

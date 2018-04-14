@@ -1,8 +1,8 @@
-package com.kkisiele.kata04.football;
+package com.kkisiele.munging.football;
 
-import com.kkisiele.kata04.parser.ClassPathResource;
-import com.kkisiele.kata04.parser.TextFileParser;
-import com.kkisiele.kata04.parser.TextFileRow;
+import com.kkisiele.munging.parser.ClassPathResource;
+import com.kkisiele.munging.parser.TextFileParser;
+import com.kkisiele.munging.parser.TextFileRow;
 
 import java.util.ArrayList;
 import java.util.List;

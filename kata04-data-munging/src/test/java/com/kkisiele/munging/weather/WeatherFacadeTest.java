@@ -1,4 +1,4 @@
-package com.kkisiele.kata04.weather;
+package com.kkisiele.munging.weather;
 
 import org.junit.Assert;
 import org.junit.Before;

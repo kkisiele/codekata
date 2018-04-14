@@ -1,4 +1,4 @@
-package com.kkisiele.kata04.football;
+package com.kkisiele.munging.football;
 
 public abstract class Team {
     public abstract String name();

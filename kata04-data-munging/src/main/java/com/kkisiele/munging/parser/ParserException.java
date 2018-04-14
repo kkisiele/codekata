@@ -1,4 +1,4 @@
-package com.kkisiele.kata04.parser;
+package com.kkisiele.munging.parser;
 
 public class ParserException extends RuntimeException {
     public ParserException(String message) {

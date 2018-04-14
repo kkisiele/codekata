@@ -1,4 +1,4 @@
-package com.kkisiele.kata04.parser;
+package com.kkisiele.munging.parser;
 
 public final class HeaderName {
     private final String name;

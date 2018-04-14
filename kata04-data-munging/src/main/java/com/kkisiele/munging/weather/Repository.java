@@ -1,4 +1,4 @@
-package com.kkisiele.kata04.weather;
+package com.kkisiele.munging.weather;
 
 import java.util.List;
 
