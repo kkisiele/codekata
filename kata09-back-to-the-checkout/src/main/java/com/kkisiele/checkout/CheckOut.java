@@ -1,3 +1,5 @@
+package com.kkisiele.checkout;
+
 public class CheckOut {
     private PricingRules pricingRules;
     private Items items = new Items();

@@ -1,3 +1,5 @@
+package com.kkisiele.checkout;
+
 import java.util.HashMap;
 import java.util.Map;
 

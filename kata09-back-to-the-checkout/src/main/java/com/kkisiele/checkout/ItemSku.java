@@ -1,3 +1,5 @@
+package com.kkisiele.checkout;
+
 public final class ItemSku {
     private final String value;
 

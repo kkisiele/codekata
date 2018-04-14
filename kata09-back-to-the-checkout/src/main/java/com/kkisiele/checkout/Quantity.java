@@ -1,3 +1,5 @@
+package com.kkisiele.checkout;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 

@@ -1,3 +1,5 @@
+package com.kkisiele.checkout;
+
 public class PricingRules {
     private RegularPrices regularPrices = new RegularPrices();
     private SpecialPrices specialPrices = new SpecialPrices();

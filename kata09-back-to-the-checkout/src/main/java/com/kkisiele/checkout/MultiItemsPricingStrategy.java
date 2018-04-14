@@ -1,3 +1,5 @@
+package com.kkisiele.checkout;
+
 public class MultiItemsPricingStrategy implements PricingStrategy {
     private final Item item;
     private final Money price;

@@ -1,3 +1,5 @@
+package com.kkisiele.checkout;
+
 import java.util.ArrayList;
 import java.util.List;
 
