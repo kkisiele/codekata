@@ -1,36 +1,50 @@
 package com.kkisiele.kata04.parser;
 
-public class TextFileHeader {
-    private final String name;
-    private final int offset;
-    private TextFileHeaders container;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-    public TextFileHeader(String name, int offset) {
-        this.name = name;
-        this.offset = offset;
+class TextFileHeader {
+    private List<HeaderName> names = new ArrayList<>();
+
+    public TextFileHeader(String line) {
+        parse(line);
     }
 
-    void setContainer(TextFileHeaders container) {
-        this.container = container;
+    private void parse(String line) {
+        String[] headerNames = line.trim().split("\\s+");
+        for(String headerName : headerNames) {
+            int offset = line.indexOf(headerName);
+            add(headerName, offset);
+        }
     }
 
-    public String name() {
-        return name;
+    private void add(String name, int offset) {
+        names.add(new HeaderName(name, offset, this));
     }
 
-    public int offset() {
-        return offset;
+    public HeaderName get(String name) {
+        for(HeaderName header : names) {
+            if(header.hasName(name)) {
+                return header;
+            }
+        }
+        throw new ParserException("Header [" + name + "] doesn't exist");
     }
 
-    public boolean hasName(String name) {
-        return name().equals(name);
+    public int count() {
+        return names.size();
     }
 
-    public boolean hasNextHeader() {
-        return nextHeader() != null;
+    HeaderName nextTo(HeaderName header) {
+        int index = names.indexOf(header);
+        if(index + 1 < names.size()) {
+            return names.get(index + 1);
+        }
+        return null;
     }
 
-    public TextFileHeader nextHeader() {
-        return container.nextTo(this);
+    public List<HeaderName> values() {
+        return Collections.unmodifiableList(names);
     }
 }

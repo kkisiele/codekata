@@ -9,7 +9,7 @@ public class TextFileParserTest {
     @Test
     public void testParsingWeatherFile() {
         TextFileParser parser = new TextFileParser(new ClassPathResource("weather.dat"));
-        TextFileParserResult result = parser.parse();
+        ParserResult result = parser.parse();
         Assert.assertEquals(17, result.numberOfHeaders());
         Assert.assertEquals(31, result.numberOfDataRows());
         Assert.assertEquals("0.00", result.dataRows().get(1).getString("TPcpn"));
@@ -21,7 +21,7 @@ public class TextFileParserTest {
     public void testParsingFootballFile() {
         TextFileParser parser = new TextFileParser(new ClassPathResource("football.dat"));
         parser.addIgnoreLinePredicate(line -> line.trim().startsWith("---"));
-        TextFileParserResult result = parser.parse();
+        ParserResult result = parser.parse();
 
         Assert.assertEquals(Arrays.asList("Team", "P", "W", "L", "D", "F", "A", "Pts"), result.headerNames());
         Assert.assertEquals(20, result.numberOfDataRows());

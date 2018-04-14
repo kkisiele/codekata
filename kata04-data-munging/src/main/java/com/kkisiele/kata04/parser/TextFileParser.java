@@ -19,7 +19,7 @@ public class TextFileParser {
     private List<Predicate<String>> ignoreLinePredicates = new ArrayList<>();
 
     private BufferedReader bufferedReader;
-    private TextFileHeaders headers = new TextFileHeaders();
+    private TextFileHeader header;
     private List<TextFileRow> dataRows = new ArrayList<>();
 
     public TextFileParser(Resource resource) {
@@ -39,7 +39,7 @@ public class TextFileParser {
         return parse().dataRows();
     }
 
-    public TextFileParserResult parse() {
+    public ParserResult parse() {
         try {
             openReader();
             return doParse();
@@ -48,7 +48,7 @@ public class TextFileParser {
         }
     }
 
-    private TextFileParserResult doParse() {
+    private ParserResult doParse() {
         parseHeader();
         parseDataRows();
         return createResult();
@@ -56,11 +56,7 @@ public class TextFileParser {
 
     private void parseHeader() {
         String line = readLine();
-        String[] headerNames = line.trim().split("\\s+");
-        for(String headerName : headerNames) {
-            int offset = line.indexOf(headerName);
-            headers.add(new TextFileHeader(headerName, offset));
-        }
+        header = new TextFileHeader(line);
     }
 
     private void parseDataRows() {
@@ -69,15 +65,15 @@ public class TextFileParser {
             if (line == null) {
                 break;
             }
-            dataRows.add(new TextFileRow(line, headers));
+            dataRows.add(new TextFileRow(line, header));
         }
     }
 
-    private TextFileParserResult createResult() {
-        return new TextFileParserResult() {
+    private ParserResult createResult() {
+        return new ParserResult() {
             @Override
-            public List<TextFileHeader> headers() {
-                return headers.values();
+            public List<HeaderName> headers() {
+                return header.values();
             }
 
             @Override

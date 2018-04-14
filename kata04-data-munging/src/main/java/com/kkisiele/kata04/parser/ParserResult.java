@@ -3,13 +3,13 @@ package com.kkisiele.kata04.parser;
 import java.util.LinkedList;
 import java.util.List;
 
-public interface TextFileParserResult {
-    List<TextFileHeader> headers();
+public interface ParserResult {
+    List<HeaderName> headers();
     List<TextFileRow> dataRows();
 
     default List<String> headerNames() {
         List<String> result = new LinkedList<>();
-        for(TextFileHeader header : headers()) {
+        for(HeaderName header : headers()) {
             result.add(header.name());
         }
         return result;

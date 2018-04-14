@@ -4,16 +4,15 @@ import java.math.BigDecimal;
 
 public class TextFileRow {
     private final String line;
-    private TextFileHeaders headers;
+    private final TextFileHeader header;
 
-    public TextFileRow(String line, TextFileHeaders headers) {
+    public TextFileRow(String line, TextFileHeader header) {
         this.line = line;
-        this.headers = headers;
+        this.header = header;
     }
 
     public String getString(String headerName) {
-        TextFileHeader header = headers.get(headerName);
-        return stringField(header);
+        return stringField(header.get(headerName));
     }
 
     public Integer getInteger(String headerName) {
@@ -32,7 +31,7 @@ public class TextFileRow {
         return new BigDecimal(value);
     }
 
-    private String stringField(TextFileHeader header) {
+    private String stringField(HeaderName header) {
         return stringField(fieldStartOffset(header), fieldEndOffset(header));
     }
 
@@ -49,7 +48,7 @@ public class TextFileRow {
         return parts[0];
     }
 
-    private int fieldStartOffset(TextFileHeader header) {
+    private int fieldStartOffset(HeaderName header) {
         int offset = header.offset();
 
         do {
@@ -62,7 +61,7 @@ public class TextFileRow {
         return 0;
     }
 
-    private int fieldEndOffset(TextFileHeader header) {
+    private int fieldEndOffset(HeaderName header) {
         return header.hasNextHeader() ? fieldStartOffset(header.nextHeader()) : line.length();
     }
 }
