@@ -51,7 +51,7 @@ public class TextFileParser {
     private TextFileParserResult doParse() {
         parseHeader();
         parseDataRows();
-        return createParserResult();
+        return createResult();
     }
 
     private void parseHeader() {
@@ -73,7 +73,7 @@ public class TextFileParser {
         }
     }
 
-    private TextFileParserResult createParserResult() {
+    private TextFileParserResult createResult() {
         return new TextFileParserResult() {
             @Override
             public List<TextFileHeader> headers() {
