@@ -13,7 +13,7 @@ class RegularPriceCalculator implements PriceCalculator {
     @Override
     public Calculation calculate(Items items) {
         Calculation calculation = new Calculation();
-        for(Item item : items.values()) {
+        for(Item item : items) {
             Money price = prices.get(item.sku());
             calculation.add(item, item.price(price));
         }

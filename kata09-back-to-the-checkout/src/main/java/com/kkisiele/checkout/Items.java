@@ -2,7 +2,7 @@ package com.kkisiele.checkout;
 
 import java.util.*;
 
-class Items {
+class Items implements Iterable<Item> {
     private final Map<ItemSku, Item> items = new HashMap<>();
 
     public Items() {
@@ -21,7 +21,7 @@ class Items {
     }
 
     public void add(Items items) {
-        items.values().forEach(item -> add(item));
+        items.forEach(item -> add(item));
     }
 
     private void add(ItemSku sku, Quantity quantity) {
@@ -30,7 +30,7 @@ class Items {
     }
 
     public void remove(Items items) {
-        items.values().forEach(item -> remove(item));
+        items.forEach(item -> remove(item));
     }
 
     private void remove(Item item) {
@@ -45,15 +45,16 @@ class Items {
         return items.get(sku);
     }
 
-    public Set<Item> values() {
-        return new HashSet<>(items.values());
-    }
-
     public Calculation calculation(PriceCalculator priceCalculator) {
         return priceCalculator.calculate(this);
     }
 
     public Money price(PriceCalculator priceCalculator) {
         return calculation(priceCalculator).totalPrice();
+    }
+
+    @Override
+    public Iterator<Item> iterator() {
+        return items.values().iterator();
     }
 }
