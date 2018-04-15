@@ -12,11 +12,11 @@ class RegularPricing implements Pricing {
 
     @Override
     public Calculation calculate(Items items) {
-        Money total = Money.ZERO;
+        Calculation calculation = new Calculation();
         for(Item item : items.values()) {
             Money price = prices.get(item.sku());
-            total = total.add(item.calculatePrice(price));
+            calculation.add(item, item.calculatePrice(price));
         }
-        return new Calculation(total, items);
+        return calculation;
     }
 }

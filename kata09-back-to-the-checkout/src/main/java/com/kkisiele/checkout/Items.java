@@ -52,11 +52,11 @@ class Items {
         return items;
     }
 
-    public Calculation calculate(Pricing pricing) {
+    public Calculation calculation(Pricing pricing) {
         return pricing.calculate(this);
     }
 
-    public Money calculatePrice(Pricing pricing) {
-        return calculate(pricing).totalPrice();
+    public Money price(Pricing pricing) {
+        return calculation(pricing).totalPrice();
     }
 }

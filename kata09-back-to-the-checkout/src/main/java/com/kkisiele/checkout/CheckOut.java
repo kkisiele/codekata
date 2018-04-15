@@ -13,6 +13,6 @@ public class CheckOut {
     }
 
     public Money total() {
-        return items.calculatePrice(pricing);
+        return items.price(pricing);
     }
 }
