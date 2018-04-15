@@ -44,6 +44,10 @@ final class Item {
         return new Item(sku, quantity.multiply(value));
     }
 
+    public Money calculatePrice(Money price) {
+        return price.multiply(quantity);
+    }
+
     @Override
     public boolean equals(Object another) {
         if(another instanceof Item) {

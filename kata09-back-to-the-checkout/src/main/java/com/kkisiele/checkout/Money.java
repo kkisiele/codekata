@@ -23,6 +23,10 @@ public final class Money {
         return multiply(BigDecimal.valueOf(m));
     }
 
+    public Money multiply(Quantity quantity) {
+        return multiply(quantity.value());
+    }
+
     public Money add(Money money) {
         return new Money(amount.add(money.amount));
     }
@@ -49,4 +53,5 @@ public final class Money {
     public int hashCode() {
         return amount.hashCode();
     }
+
 }
