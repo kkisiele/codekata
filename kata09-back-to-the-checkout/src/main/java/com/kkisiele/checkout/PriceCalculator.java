@@ -1,5 +1,5 @@
 package com.kkisiele.checkout;
 
-public interface Pricing {
+public interface PriceCalculator {
     Calculation calculate(Items items);
 }

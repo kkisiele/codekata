@@ -3,29 +3,29 @@ package com.kkisiele.checkout;
 import java.util.ArrayList;
 import java.util.List;
 
-class SpecialPricing implements Pricing {
-    private final List<Pricing> pricings = new ArrayList<>();
+class SpecialPriceCalculator implements PriceCalculator {
+    private final List<PriceCalculator> priceCalculators = new ArrayList<>();
 
-    public void add(Pricing pricing) {
-        pricings.add(new NullSafePricing(pricing));
+    public void add(PriceCalculator priceCalculator) {
+        priceCalculators.add(new NullSafePriceCalculator(priceCalculator));
     }
 
     @Override
     public Calculation calculate(Items items) {
         Items calculatedItems = new Items(items);
         Calculation result = new Calculation();
-        for(Pricing pricing : pricings) {
-            Calculation calculation = pricing.calculate(calculatedItems);
+        for(PriceCalculator priceCalculator : priceCalculators) {
+            Calculation calculation = priceCalculator.calculate(calculatedItems);
             result.add(calculation);
             calculatedItems.remove(calculation.items());
         }
         return result;
     }
 
-    private class NullSafePricing implements Pricing {
-        private final Pricing target;
+    private class NullSafePriceCalculator implements PriceCalculator {
+        private final PriceCalculator target;
 
-        public NullSafePricing(Pricing target) {
+        public NullSafePriceCalculator(PriceCalculator target) {
             this.target = target;
         }
 

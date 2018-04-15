@@ -45,19 +45,15 @@ class Items {
         return items.get(sku);
     }
 
-    public boolean contain(ItemSku sku) {
-        return get(sku) != null;
-    }
-
     public Set<Item> values() {
         return new HashSet<>(items.values());
     }
 
-    public Calculation calculation(Pricing pricing) {
-        return pricing.calculate(this);
+    public Calculation calculation(PriceCalculator priceCalculator) {
+        return priceCalculator.calculate(this);
     }
 
-    public Money price(Pricing pricing) {
-        return calculation(pricing).totalPrice();
+    public Money price(PriceCalculator priceCalculator) {
+        return calculation(priceCalculator).totalPrice();
     }
 }

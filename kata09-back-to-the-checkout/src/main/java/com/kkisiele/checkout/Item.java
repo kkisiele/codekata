@@ -44,7 +44,7 @@ final class Item {
         return new Item(sku, quantity.multiply(value));
     }
 
-    public Money calculatePrice(Money price) {
+    public Money price(Money price) {
         return price.multiply(quantity);
     }
 

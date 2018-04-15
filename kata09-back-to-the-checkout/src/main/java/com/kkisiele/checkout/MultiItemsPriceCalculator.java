@@ -1,21 +1,21 @@
 package com.kkisiele.checkout;
 
-public class MultiItemsPricing implements Pricing {
+public class MultiItemsPriceCalculator implements PriceCalculator {
     private final Item item;
     private final Money price;
 
-    public MultiItemsPricing(Item item, Money price) {
+    public MultiItemsPriceCalculator(Item item, Money price) {
         this.item = item;
         this.price = price;
     }
 
     @Override
     public Calculation calculate(Items items) {
-        if(items.contain(item.sku())) {
-            Item calculatedItem = items.get(item.sku());
-            return calculate(calculatedItem);
+        Item calculatedItem = items.get(item.sku());
+        if(calculatedItem == null) {
+            return null;
         }
-        return null;
+        return calculate(calculatedItem);
     }
 
     private Calculation calculate(Item calculatedItem) {

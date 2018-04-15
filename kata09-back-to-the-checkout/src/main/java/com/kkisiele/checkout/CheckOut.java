@@ -1,11 +1,11 @@
 package com.kkisiele.checkout;
 
 public class CheckOut {
-    private final Pricing pricing;
+    private final PriceCalculator priceCalculator;
     private final Items items = new Items();
 
-    public CheckOut(Pricing pricing) {
-        this.pricing = pricing;
+    public CheckOut(PriceCalculator priceCalculator) {
+        this.priceCalculator = priceCalculator;
     }
 
     public void scan(ItemSku sku) {
@@ -13,6 +13,6 @@ public class CheckOut {
     }
 
     public Money total() {
-        return items.price(pricing);
+        return items.price(priceCalculator);
     }
 }
