@@ -20,8 +20,8 @@ public class TotalPricing implements Pricing {
     }
 
     private Money calculateDiscount(Items items) {
-        Calculation specialCalculation = items.calculation(specialPricing);
-        Money regularPrice = specialCalculation.items().price(regularPricing);
-        return regularPrice.subtract(specialCalculation.totalPrice());
+        Calculation calculation = items.calculation(specialPricing);
+        Money price = calculation.items().price(regularPricing);
+        return price.subtract(calculation.totalPrice());
     }
 }

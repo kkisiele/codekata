@@ -22,7 +22,7 @@ public class Calculation {
     }
 
     public Items items() {
-        return items.copy();
+        return new Items(items);
     }
 
     public void add(Calculation calculation) {

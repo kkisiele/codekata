@@ -4,28 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 class SpecialPricing implements Pricing {
-    private final List<Pricing> prices = new ArrayList<>();
+    private final List<Pricing> pricings = new ArrayList<>();
 
-    public void add(Pricing price) {
-        prices.add(new NullSafeCalculation(price));
+    public void add(Pricing pricing) {
+        pricings.add(new NullSafePricing(pricing));
     }
 
     @Override
     public Calculation calculate(Items items) {
-        Items calculateItems = items.copy();
-        Calculation total = new Calculation();
-        for(Pricing price : prices) {
-            Calculation calculation = price.calculate(calculateItems);
-            total.add(calculation);
-            calculateItems.subtract(calculation.items());
+        Items calculatedItems = new Items(items);
+        Calculation result = new Calculation();
+        for(Pricing pricing : pricings) {
+            Calculation calculation = pricing.calculate(calculatedItems);
+            result.add(calculation);
+            calculatedItems.remove(calculation.items());
         }
-        return total;
+        return result;
     }
 
-    private class NullSafeCalculation implements Pricing {
+    private class NullSafePricing implements Pricing {
         private final Pricing target;
 
-        public NullSafeCalculation(Pricing target) {
+        public NullSafePricing(Pricing target) {
             this.target = target;
         }
 

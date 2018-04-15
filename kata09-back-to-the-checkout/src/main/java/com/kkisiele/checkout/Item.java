@@ -28,8 +28,8 @@ final class Item {
         return quantity;
     }
 
-    public Item updateQuantityBy(Quantity newQuantity) {
-        return new Item(sku, quantity.add(newQuantity));
+    public Item add(Quantity q) {
+        return new Item(sku, quantity.add(q));
     }
 
     public Item subtract(Quantity q) {
