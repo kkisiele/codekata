@@ -27,6 +27,15 @@ public class Calculation {
 
     public void add(Calculation calculation) {
         totalPrice = totalPrice.add(calculation.totalPrice);
-        items.addAll(calculation.items());
+        items.add(calculation.items());
+    }
+
+    public void add(Item item, Money money) {
+        items.add(item);
+        totalPrice = totalPrice.add(money);
+    }
+
+    public void applyDiscount(Money discount) {
+        totalPrice = totalPrice.subtract(discount);
     }
 }

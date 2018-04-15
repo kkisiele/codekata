@@ -1,5 +1,5 @@
 package com.kkisiele.checkout;
 
-public interface PricingStrategy {
+public interface Pricing {
     Calculation calculate(Items items);
 }
