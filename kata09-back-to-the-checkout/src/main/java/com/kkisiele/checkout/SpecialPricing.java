@@ -3,17 +3,18 @@ package com.kkisiele.checkout;
 import java.util.ArrayList;
 import java.util.List;
 
-class SpecialPrices {
-    private final List<PricingStrategy> prices = new ArrayList<>();
+class SpecialPricing implements Pricing {
+    private final List<Pricing> prices = new ArrayList<>();
 
-    public void add(PricingStrategy price) {
+    public void add(Pricing price) {
         prices.add(new NullSafeCalculation(price));
     }
 
+    @Override
     public Calculation calculate(Items items) {
         Items calculateItems = items.copy();
         Calculation total = new Calculation();
-        for(PricingStrategy price : prices) {
+        for(Pricing price : prices) {
             Calculation calculation = price.calculate(calculateItems);
             total.add(calculation);
             calculateItems.subtract(calculation.items());
@@ -21,10 +22,10 @@ class SpecialPrices {
         return total;
     }
 
-    private class NullSafeCalculation implements PricingStrategy {
-        private final PricingStrategy target;
+    private class NullSafeCalculation implements Pricing {
+        private final Pricing target;
 
-        public NullSafeCalculation(PricingStrategy target) {
+        public NullSafeCalculation(Pricing target) {
             this.target = target;
         }
 

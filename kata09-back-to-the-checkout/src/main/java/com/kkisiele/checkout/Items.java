@@ -18,16 +18,12 @@ class Items {
         itemQuantities.put(sku, item.updateQuantityBy(quantity));
     }
 
-    public void addAll(Items items) {
-        for(Item item: items.values()) {
-            add(item);
-        }
+    public void add(Items items) {
+        items.values().forEach(item -> add(item));
     }
 
     public void subtract(Items items) {
-        for(Item item: items.values()) {
-            subtract(item);
-        }
+        items.values().forEach(item -> subtract(item));
     }
 
     private void subtract(Item item) {
@@ -52,7 +48,15 @@ class Items {
 
     public Items copy() {
         Items items = new Items();
-        items.addAll(this);
+        items.add(this);
         return items;
+    }
+
+    public Calculation calculate(Pricing pricing) {
+        return pricing.calculate(this);
+    }
+
+    public Money calculatePrice(Pricing pricing) {
+        return calculate(pricing).totalPrice();
     }
 }

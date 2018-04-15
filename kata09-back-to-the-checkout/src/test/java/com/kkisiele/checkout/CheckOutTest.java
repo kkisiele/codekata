@@ -33,15 +33,15 @@ public class CheckOutTest {
     }
 
     private CheckOut createCheckOut() {
-        PricingRules pricingRules = new PricingRules();
-        pricingRules.addPrice(ItemSku.valueOf("A"), Money.valueOf(50));
-        pricingRules.addPrice(ItemSku.valueOf("B"), Money.valueOf(30));
-        pricingRules.addPrice(ItemSku.valueOf("C"), Money.valueOf(20));
-        pricingRules.addPrice(ItemSku.valueOf("D"), Money.valueOf(15));
-        pricingRules.addSpecialPrice(new MultiItemsPricingStrategy(new Item("A", 3), Money.valueOf(130)));
-        pricingRules.addSpecialPrice(new MultiItemsPricingStrategy(new Item("B", 2), Money.valueOf(45)));
+        TotalPricing totalPricing = new TotalPricing();
+        totalPricing.addPrice(ItemSku.valueOf("A"), Money.valueOf(50));
+        totalPricing.addPrice(ItemSku.valueOf("B"), Money.valueOf(30));
+        totalPricing.addPrice(ItemSku.valueOf("C"), Money.valueOf(20));
+        totalPricing.addPrice(ItemSku.valueOf("D"), Money.valueOf(15));
+        totalPricing.addSpecialPrice(new MultiItemsPricing(new Item("A", 3), Money.valueOf(130)));
+        totalPricing.addSpecialPrice(new MultiItemsPricing(new Item("B", 2), Money.valueOf(45)));
 
-        return new CheckOut(pricingRules);
+        return new CheckOut(totalPricing);
     }
 
     @Test

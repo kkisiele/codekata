@@ -17,6 +17,11 @@ public class Calculation {
         items.add(item);
     }
 
+    public Calculation(Money totalPrice, Items newItems) {
+        this(totalPrice);
+        items.add(newItems);
+    }
+
     public Money totalPrice() {
         return totalPrice;
     }
@@ -27,6 +32,6 @@ public class Calculation {
 
     public void add(Calculation calculation) {
         totalPrice = totalPrice.add(calculation.totalPrice);
-        items.addAll(calculation.items());
+        items.add(calculation.items());
     }
 }
