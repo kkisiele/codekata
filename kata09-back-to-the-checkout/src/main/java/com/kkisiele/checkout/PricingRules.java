@@ -14,11 +14,11 @@ public class PricingRules {
 
     public Money calculate(Items items) {
         Money regularPrice = regularPrices.calculate(items);
-        Money discountAmount = calculateSpecialPricesDiscountAmount(items);
-        return regularPrice.subtract(discountAmount);
+        Money discount = calculateDiscount(items);
+        return regularPrice.subtract(discount);
     }
 
-    private Money calculateSpecialPricesDiscountAmount(Items items) {
+    private Money calculateDiscount(Items items) {
         Calculation calculation = specialPrices.calculate(items);
         Money regularPrice = regularPrices.calculate(calculation.items());
         return regularPrice.subtract(calculation.totalPrice());
