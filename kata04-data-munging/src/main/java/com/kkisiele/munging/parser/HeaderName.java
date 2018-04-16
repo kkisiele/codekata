@@ -23,11 +23,11 @@ public final class HeaderName {
         return name().equals(name);
     }
 
-    public boolean hasNextHeader() {
-        return nextHeader() != null;
+    public boolean hasNext() {
+        return next() != null;
     }
 
-    public HeaderName nextHeader() {
+    public HeaderName next() {
         return header.nextTo(this);
     }
 }

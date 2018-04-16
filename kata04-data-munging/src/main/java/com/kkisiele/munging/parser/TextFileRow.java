@@ -31,8 +31,8 @@ public class TextFileRow {
         return new BigDecimal(value);
     }
 
-    private String stringField(HeaderName header) {
-        return stringField(fieldStartOffset(header), fieldEndOffset(header));
+    private String stringField(HeaderName headerName) {
+        return stringField(fieldStartOffset(headerName), fieldEndOffset(headerName));
     }
 
     private String stringField(int startOffset, int endOffset) {
@@ -48,8 +48,8 @@ public class TextFileRow {
         return parts[0];
     }
 
-    private int fieldStartOffset(HeaderName header) {
-        int offset = header.offset();
+    private int fieldStartOffset(HeaderName headerName) {
+        int offset = headerName.offset();
 
         do {
             char ch = line.charAt(offset);
@@ -61,7 +61,7 @@ public class TextFileRow {
         return 0;
     }
 
-    private int fieldEndOffset(HeaderName header) {
-        return header.hasNextHeader() ? fieldStartOffset(header.nextHeader()) : line.length();
+    private int fieldEndOffset(HeaderName headerName) {
+        return headerName.hasNext() ? fieldStartOffset(headerName.next()) : line.length();
     }
 }
