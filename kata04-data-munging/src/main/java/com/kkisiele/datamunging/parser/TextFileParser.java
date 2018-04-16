@@ -1,4 +1,4 @@
-package com.kkisiele.munging.parser;
+package com.kkisiele.datamunging.parser;
 
 import java.io.BufferedReader;
 import java.io.IOException;

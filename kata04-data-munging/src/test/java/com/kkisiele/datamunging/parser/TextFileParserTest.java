@@ -1,4 +1,4 @@
-package com.kkisiele.munging.parser;
+package com.kkisiele.datamunging.parser;
 
 import org.junit.Assert;
 import org.junit.Test;

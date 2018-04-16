@@ -1,4 +1,4 @@
-package com.kkisiele.munging.football;
+package com.kkisiele.datamunging.football;
 
 import java.util.Comparator;
 import java.util.List;

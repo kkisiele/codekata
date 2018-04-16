@@ -1,4 +1,4 @@
-package com.kkisiele.munging.parser;
+package com.kkisiele.datamunging.parser;
 
 import java.util.LinkedList;
 import java.util.List;

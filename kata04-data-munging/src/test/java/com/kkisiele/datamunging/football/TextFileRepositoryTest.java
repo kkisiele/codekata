@@ -1,4 +1,4 @@
-package com.kkisiele.munging.football;
+package com.kkisiele.datamunging.football;
 
 import org.junit.Assert;
 import org.junit.Before;

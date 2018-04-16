@@ -1,4 +1,4 @@
-package com.kkisiele.munging.weather;
+package com.kkisiele.datamunging.weather;
 
 import java.math.BigDecimal;
 import java.util.Objects;
