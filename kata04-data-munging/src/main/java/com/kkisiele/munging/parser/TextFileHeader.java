@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class TextFileHeader {
-    private List<HeaderName> names = new ArrayList<>();
+    private List<HeaderName> headerNames = new ArrayList<>();
 
     public TextFileHeader(String line) {
         parse(line);
@@ -20,11 +20,11 @@ public class TextFileHeader {
     }
 
     private void add(String name, int offset) {
-        names.add(new HeaderName(name, offset, this));
+        headerNames.add(new HeaderName(name, offset, this));
     }
 
     public HeaderName get(String name) {
-        for(HeaderName header : names) {
+        for(HeaderName header : headerNames) {
             if(header.hasName(name)) {
                 return header;
             }
@@ -33,18 +33,18 @@ public class TextFileHeader {
     }
 
     public int count() {
-        return names.size();
+        return headerNames.size();
     }
 
-    HeaderName nextTo(HeaderName header) {
-        int index = names.indexOf(header);
-        if(index + 1 < names.size()) {
-            return names.get(index + 1);
+    HeaderName nextTo(HeaderName headerName) {
+        int index = headerNames.indexOf(headerName);
+        if(index + 1 < headerNames.size()) {
+            return headerNames.get(index + 1);
         }
         return null;
     }
 
     public List<HeaderName> values() {
-        return Collections.unmodifiableList(names);
+        return Collections.unmodifiableList(headerNames);
     }
 }
