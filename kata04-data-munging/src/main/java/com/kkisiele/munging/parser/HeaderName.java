@@ -1,5 +1,7 @@
 package com.kkisiele.munging.parser;
 
+import java.util.Objects;
+
 public final class HeaderName {
     private final String name;
     private final int offset;
@@ -29,5 +31,19 @@ public final class HeaderName {
 
     public HeaderName next() {
         return header.nextTo(this);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object instanceof HeaderName) {
+            HeaderName headerName = (HeaderName)object;
+            return Objects.equals(name, headerName.name) && offset == headerName.offset && header == headerName.header;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, offset);
     }
 }
