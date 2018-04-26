@@ -21,7 +21,7 @@ class TextFileRepository implements Repository {
         List<Measurement> result = new ArrayList<>();
         for(TextFileRow row : parseDataRows()) {
             if(!isSummaryRow(row)) {
-                result.add(new MeasurementImpl(row));
+                result.add(new ParsedMeasurement(row));
             }
         }
         return result;
@@ -36,10 +36,10 @@ class TextFileRepository implements Repository {
         return row.getString(DAY_OF_MONTH_HEADER).equals(SUMMARY_ROW);
     }
 
-    private class MeasurementImpl implements Measurement {
+    private class ParsedMeasurement implements Measurement {
         private final TextFileRow row;
 
-        public MeasurementImpl(TextFileRow row) {
+        public ParsedMeasurement(TextFileRow row) {
             this.row = row;
         }
 

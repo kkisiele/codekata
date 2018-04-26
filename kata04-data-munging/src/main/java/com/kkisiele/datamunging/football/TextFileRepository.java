@@ -18,7 +18,7 @@ class TextFileRepository implements Repository {
     public List<Team> getAllTeams() {
         List<Team> result = new ArrayList<>();
         for(TextFileRow row : parseDataRows()) {
-            result.add(new TeamImpl(row));
+            result.add(new ParsedTeam(row));
         }
         return result;
     }
@@ -29,10 +29,10 @@ class TextFileRepository implements Repository {
         return parser.dataRows();
     }
 
-    private class TeamImpl extends Team {
+    private class ParsedTeam extends Team {
         private final TextFileRow row;
 
-        public TeamImpl(TextFileRow row) {
+        public ParsedTeam(TextFileRow row) {
             this.row = row;
         }
 
