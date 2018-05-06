@@ -7,16 +7,16 @@ public interface ParserResult {
     TextFileHeader header();
     List<TextFileRow> dataRows();
 
-    default List<String> headerNames() {
+    default List<String> columnNames() {
         List<String> result = new LinkedList<>();
-        for(HeaderName header : header().values()) {
+        for(Column header : header().columns()) {
             result.add(header.name());
         }
         return result;
     }
 
-    default int numberOfHeaders() {
-        return header().count();
+    default int numberOfColumns() {
+        return header().numberOfColumns();
     }
 
     default int numberOfDataRows() {

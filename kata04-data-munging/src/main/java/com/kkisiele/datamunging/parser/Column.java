@@ -2,12 +2,12 @@ package com.kkisiele.datamunging.parser;
 
 import java.util.Objects;
 
-public final class HeaderName {
+public final class Column {
     private final String name;
     private final int offset;
     private final TextFileHeader header;
 
-    public HeaderName(String name, int offset, TextFileHeader header) {
+    public Column(String name, int offset, TextFileHeader header) {
         this.name = name;
         this.offset = offset;
         this.header = header;
@@ -29,15 +29,15 @@ public final class HeaderName {
         return next() != null;
     }
 
-    public HeaderName next() {
+    public Column next() {
         return header.nextTo(this);
     }
 
     @Override
     public boolean equals(Object object) {
-        if(object instanceof HeaderName) {
-            HeaderName headerName = (HeaderName)object;
-            return Objects.equals(name, headerName.name) && offset == headerName.offset && header == headerName.header;
+        if(object instanceof Column) {
+            Column column = (Column)object;
+            return Objects.equals(name, column.name) && offset == column.offset && header == column.header;
         }
         return false;
     }

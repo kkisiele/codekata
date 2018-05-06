@@ -11,28 +11,28 @@ public class TextFileRow {
         this.header = header;
     }
 
-    public String getString(String headerName) {
-        return stringField(header.get(headerName));
+    public String getString(String columnName) {
+        return stringField(header.getColumn(columnName));
     }
 
-    public Integer getInteger(String headerName) {
-        BigDecimal value = getBigDecimal(headerName);
+    public Integer getInteger(String columnName) {
+        BigDecimal value = getBigDecimal(columnName);
         if(value == null) {
             return null;
         }
         return value.intValue();
     }
 
-    public BigDecimal getBigDecimal(String headerName) {
-        String value = getString(headerName);
+    public BigDecimal getBigDecimal(String columnName) {
+        String value = getString(columnName);
         if(value == null || value.trim().length() == 0) {
             return null;
         }
         return new BigDecimal(value);
     }
 
-    private String stringField(HeaderName headerName) {
-        return stringField(fieldStartOffset(headerName), fieldEndOffset(headerName));
+    private String stringField(Column column) {
+        return stringField(fieldStartOffset(column), fieldEndOffset(column));
     }
 
     private String stringField(int startOffset, int endOffset) {
@@ -48,8 +48,8 @@ public class TextFileRow {
         return parts[0];
     }
 
-    private int fieldStartOffset(HeaderName headerName) {
-        int offset = headerName.offset();
+    private int fieldStartOffset(Column column) {
+        int offset = column.offset();
 
         do {
             char ch = line.charAt(offset);
@@ -61,7 +61,7 @@ public class TextFileRow {
         return 0;
     }
 
-    private int fieldEndOffset(HeaderName headerName) {
-        return headerName.hasNext() ? fieldStartOffset(headerName.next()) : line.length();
+    private int fieldEndOffset(Column column) {
+        return column.hasNext() ? fieldStartOffset(column.next()) : line.length();
     }
 }
