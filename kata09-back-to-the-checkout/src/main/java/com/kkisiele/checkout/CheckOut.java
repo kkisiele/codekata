@@ -1,6 +1,6 @@
 package com.kkisiele.checkout;
 
-public class CheckOut {
+public final class CheckOut {
     private final PriceCalculator priceCalculator;
     private final Items items = new Items();
 

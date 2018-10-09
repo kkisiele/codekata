@@ -3,7 +3,7 @@ package com.kkisiele.checkout;
 import java.util.HashMap;
 import java.util.Map;
 
-class RegularPriceCalculator implements PriceCalculator {
+final class RegularPriceCalculator implements PriceCalculator {
     private Map<ItemSku, Money> prices = new HashMap<>();
 
     public void add(ItemSku sku, Money price) {

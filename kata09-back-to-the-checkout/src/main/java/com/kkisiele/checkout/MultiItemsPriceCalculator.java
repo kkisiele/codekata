@@ -1,6 +1,6 @@
 package com.kkisiele.checkout;
 
-public class MultiItemsPriceCalculator implements PriceCalculator {
+final class MultiItemsPriceCalculator implements PriceCalculator {
     private final Item item;
     private final Money price;
 

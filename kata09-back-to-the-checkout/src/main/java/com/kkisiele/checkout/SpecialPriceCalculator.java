@@ -3,7 +3,7 @@ package com.kkisiele.checkout;
 import java.util.ArrayList;
 import java.util.List;
 
-class SpecialPriceCalculator implements PriceCalculator {
+final class SpecialPriceCalculator implements PriceCalculator {
     private final List<PriceCalculator> priceCalculators = new ArrayList<>();
 
     public void add(PriceCalculator priceCalculator) {

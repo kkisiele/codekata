@@ -38,8 +38,8 @@ public class CheckOutTest {
         totalPricing.addPrice(ItemSku.valueOf("B"), Money.valueOf(30));
         totalPricing.addPrice(ItemSku.valueOf("C"), Money.valueOf(20));
         totalPricing.addPrice(ItemSku.valueOf("D"), Money.valueOf(15));
-        totalPricing.addSpecialPrice(new MultiItemsPriceCalculator(new Item("A", 3), Money.valueOf(130)));
-        totalPricing.addSpecialPrice(new MultiItemsPriceCalculator(new Item("B", 2), Money.valueOf(45)));
+        totalPricing.addMultiItemsPrice(new Item("A", 3), Money.valueOf(130));
+        totalPricing.addMultiItemsPrice(new Item("B", 2), Money.valueOf(45));
 
         return new CheckOut(totalPricing);
     }

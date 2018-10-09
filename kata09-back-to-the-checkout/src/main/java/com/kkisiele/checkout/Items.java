@@ -2,7 +2,7 @@ package com.kkisiele.checkout;
 
 import java.util.*;
 
-class Items implements Iterable<Item> {
+final class Items implements Iterable<Item> {
     private final Map<ItemSku, Item> items = new HashMap<>();
 
     public Items() {

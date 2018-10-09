@@ -1,6 +1,6 @@
 package com.kkisiele.checkout;
 
-public class TotalPriceCalculator implements PriceCalculator {
+public final class TotalPriceCalculator implements PriceCalculator {
     private final RegularPriceCalculator regularPriceCalculator = new RegularPriceCalculator();
     private final SpecialPriceCalculator specialPriceCalculator = new SpecialPriceCalculator();
 
@@ -8,8 +8,8 @@ public class TotalPriceCalculator implements PriceCalculator {
         regularPriceCalculator.add(sku, price);
     }
 
-    public void addSpecialPrice(PriceCalculator priceCalculator) {
-        specialPriceCalculator.add(priceCalculator);
+    public void addMultiItemsPrice(Item item, Money price) {
+        specialPriceCalculator.add(new MultiItemsPriceCalculator(item, price));
     }
 
     @Override
