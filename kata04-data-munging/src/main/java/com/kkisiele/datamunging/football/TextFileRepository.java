@@ -29,7 +29,7 @@ class TextFileRepository implements Repository {
         return parser.dataRows();
     }
 
-    private class ParsedTeam extends Team {
+    private class ParsedTeam implements Team {
         private final TextFileRow row;
 
         public ParsedTeam(TextFileRow row) {
